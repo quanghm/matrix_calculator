@@ -46,26 +46,31 @@ var matrix = function(){
 <body>
 <form name="matrix_dim" id="matrix_dim" action="">
 <input type="text" name="num_rows" id="num_rows" class="entry" value="1"/>\(\times\)<input type="text" name="num_cols" id="num_cols" class="entry" value="1"/><br/><br>
-<!-- Square Matrix: <input type="checkbox" name="isSquare" id="isSquare"/><br/> -->
-Augemented Matrix: <input type="checkbox" name="isAugmented" id="isAugemented"/><br/>
+Augemented Rows: <input type="text" name="augmentedRows" id="augmentedRows" value="0"/><br/>
 <button type="submit">Set dimension</button>
 </form><br/>
-<form name="matrix_entries" id="matrix_entries" method="get" action="">
+<form name="matrix_entries" id="matrix_entries" method="post" action="doCompute.php">
 </form>
 <script type="text/javascript">
 $("#matrix_dim").submit(function(event){
 	event.preventDefault();
 	$("#matrix_entries").empty();
-	var objNewEntryInput;
 	num_rows=$("#num_rows").val();
 	num_cols=$("#num_cols").val();
-	
+	augmented_rows =$("#augmentedRows").val();
+	$("<input/>",{
+		id: "augmented_rows",
+		name: "augmented_rows",
+		type: "hidden",
+		value: augmented_rows
+	}).appendTo("#matrix_entries");
+
 	for (row=1;row<=num_rows;row++)
 	{
 		for (col=1;col<=num_cols;col++)
 		{
-			sNewEntryName=row+","+col;
-			if (($("#isAugemented").prop("checked"))&&(col==num_cols))
+			sNewEntryName="e["+row+"]["+col+"]";
+			if (col>num_cols-augmented_rows)
 			{
 				sEntryClass="augmented";
 			}

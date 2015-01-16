@@ -81,39 +81,40 @@ class matrix{
 	function findNextPivot($nStartRow,$nStartCol){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
-		$nColCount=$this->colCount;
+		$nColCount=$this->colCount-$this->augementedCols;
 	
 		//	current position
-		$aPivot=[$nStartRow,$nStartCol];
+		$currentRow=$nStartRow;
+		$currentCol=$nStartCol;
 	
-		while (($this->entries[$nStartRow][$nStartCol]==0) 	// if current entry is 0
-				and ($nStartCol<=$nColCount) 			// and within column range
-				and ($nStartRow<=$nRowCount))			// and within row range
+		for ($currentCol=$nStartCol+1;$currentCol<=$nColCount;$currentCol++)
 		{
-			if ($nStartRow<$nRowCount)
+			for ($currentRow=$nStartRow+1;$currentRow<=$nRowCount;$currentRow++)
 			{
-				$nStartRow++;
+				if ($this->entries[$currentRow][$currentCol]!==(float)0)
+				{
+					$aPivot=[$currentRow,$currentCol];
+					return $aPivot;
+				}						
 			}
-			else{
-				$nStartRow=$aPivot[0];
-				$nStartCol++;
-			}
-			if (($nStartCol>$nColCount) or ($nStartRow>$nRowCount)) {return 0;}
 		}
-		$aPivot=[$nStartRow,$nStartCol];
-		return $aPivot;
+		//$aPivot=[$nStartRow,$nStartCol];
+		return 0;
 	}
 	
 	function displayEntries($inline=FALSE,$mathLook=TRUE){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
 		$nColCount=$this->colCount;
+		$augmentedCols=$this->augementedCols;
 	
 		if ($inline)	{	echo "\\(";	}	else{echo "\\[";}
 		echo "\\left(\\begin{array}{";
 		for ($nCol=1;$nCol<=$nColCount;$nCol++)
 		{
 			echo "r";
+			if (($augmentedCols>0) and ($nCol+$augmentedCols==$nColCount))
+			{echo "|";}
 		}
 		echo "}\r\n";
 		for ($nRow=1;$nRow<=$nRowCount;$nRow++){
@@ -133,30 +134,89 @@ class matrix{
 		if ($inline) {echo "\\)";}else{echo "\\]";}
 	}
 	
-	//	Gauss-Jordan
-	function doGaussJordan(){
+	//	Gauss
+	function doGauss(){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
 		$nColCount=$this->colCount;
 	
 		//	set pivot to first entry
-		$aPivot=[1,1];
+		$aPivot=[0,0];
 		while ($aPivot!==0){
+			echo "<hr/>";
 			$aNewPivot=$this->findNextPivot($aPivot[0],$aPivot[1]);
-			if ($aNewPivot[1]==$aPivot[1])
-			{
-				$this->interchangeRows($aNewPivot[0], $aPivot[0]);
-				$this->displayEntries();
-			}
+			//print_r($aNewPivot);
+			
 			//	check if done
-			if ($this->entries[$aPivot[0]][$aPivot[1]]==0)
-			{
+			if ($aNewPivot==0){
 				return TRUE;
 			}
 			
+			//	jump more than one row
+			if ($aNewPivot[0]>$aPivot[0]+1)
+			{
+				$this->interchangeRows($aNewPivot[0], $aPivot[0]+1);
+				$this->displayEntries();
+			}
+			
+			
+			//	new pivot
+			$aPivot[0]+=1;
+			$aPivot[1]=$aNewPivot[1];
+
+			
 			//	normalize the pivot row
 			$nMultiplier=1/$this->entries[$aPivot[0]][$aPivot[1]];
-			if ($nMultiplier!==-1)
+			if ($nMultiplier!==1)
+			{
+				$this->multiplyRow($aPivot[0], $nMultiplier);
+				$this->displayEntries();
+			}
+	
+			//	kill entries in pivot columns
+			for($nRow=$aPivot[0]+1;$nRow<=$nRowCount;$nRow++)
+			{
+				if ($this->entries[$nRow][$aPivot[0]]!=='0')
+				{
+					$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
+					$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
+					$this->displayEntries();
+				}
+			}
+		}
+	}
+	//	Gauss-Jordan
+	function doGaussJordan(){
+			//	get dimensions of matrix
+		$nRowCount=$this->rowCount;
+		$nColCount=$this->colCount;
+	
+		//	set pivot to first entry
+		$aPivot=[0,0];
+		while ($aPivot!==0){
+			$aNewPivot=$this->findNextPivot($aPivot[0],$aPivot[1]);
+			
+			//	check if done
+			if ($aNewPivot==0){
+				return TRUE;
+			}
+			
+			//	jump more than one row
+			if ($aNewPivot[0]>$aPivot[0]+1)
+			{
+				$this->interchangeRows($aNewPivot[0], $aPivot[0]+1);
+				$this->displayEntries();
+			}
+			
+			
+			//	new pivot
+			$aPivot[0]+=1;
+			$aPivot[1]=$aNewPivot[1];
+
+			
+			//	normalize the pivot row
+			$nMultiplier=1/$this->entries[$aPivot[0]][$aPivot[1]];
+			if ($nMultiplier!==1)
 			{
 				$this->multiplyRow($aPivot[0], $nMultiplier);
 				$this->displayEntries();
@@ -165,21 +225,13 @@ class matrix{
 			//	kill entries in pivot columns
 			for($nRow=1;$nRow<=$nRowCount;$nRow++)
 			{
-				if (($nRow!==$aPivot[0])and($this->entries[$nRow][$aPivot[0]]!==0))
+				if (($nRow!==$aPivot[0])and ($this->entries[$nRow][$aPivot[0]]!=='0'))
 				{
 					$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
 					$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
 					$this->displayEntries();
 				}
 			}
-	
-			//	check if finished
-			if (($aPivot[0]<$nRowCount)and($aPivot[1]<$nColCount))
-			{
-				$aPivot[0]+=1;
-				$aPivot[1]+=1;
-			}
-			else{return TRUE;}
 		}
 	}
 }

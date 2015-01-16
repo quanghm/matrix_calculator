@@ -14,11 +14,11 @@ for($nRow=1;$nRow<5;$nRow++)
 {
 	for ($nCol=1;$nCol<5;$nCol++)
 	{
-		$aTestMatrix[$nRow][$nCol]=rand(0,8)*($nRow-1);//$nRow+$nCol+$nRow*$nCol;
+		$aTestMatrix[$nRow][$nCol]=rand(0,8);//*($nRow-1);//$nRow+$nCol+$nRow*$nCol;
 	}
 }
 
-$matrix =new matrix($aTestMatrix,2);
+$matrix =new matrix($aTestMatrix,1);
 $matrix->displayEntries();
 $matrix->doGaussJordan();
 //$matrix->displayEntries();
