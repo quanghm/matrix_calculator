@@ -10,44 +10,47 @@
 <script type="text/javascript">
 // function createMatrix(){}
 
-// var matrix = function(){
+var matrix = function(){
 	
-// 	this.num_rows=0;
-// 	this.num_cols=0;
-// 	this.isSquare=false;
-// 	this.isAugmented=false;
-// 	this.entries = [];
+	this.num_rows=0;
+	this.num_cols=0;
+	this.isSquare=false;
+	this.isAugmented=false;
+	this.entries = [];
 	
-// 	function setEntries(){
-// 		this.entries = [this.num_rows][this.num_cols];
-// 	}
+	function setEntries(){
+		this.entries = [this.num_rows][this.num_cols];
+	}
 	
-// 	function displayMatrix(){
+	function displayMatrix(){
 		
-// 	}
+	}
 	
-// 	interchangeRows: function(firstrow,secondrow){
+	interchangeRows: function(firstrow,secondrow){
 		
-// 	}
+	}
 	
-// 	addRowMultiple: function(firstrow,secondrow,multiplier){
+	addRowMultiple: function(firstrow,secondrow,multiplier){
 		
-// 	}
+	}
 	
-// 	multiplyRow: function(row,multiplier){
-		
-// 	}
-// }
+	multiplyRow: function(row,multiplier){
+		for (col=1;col<=num_cols;col++)
+		{
+			this.entries[row][col]*=multiplier;
+		}
+	}
+}
 </script>
 </head>
 <body>
 <form name="matrix_dim" id="matrix_dim" action="">
 <input type="text" name="num_rows" id="num_rows" class="entry" value="1"/>\(\times\)<input type="text" name="num_cols" id="num_cols" class="entry" value="1"/><br/><br>
-Square Matrix: <input type="checkbox" name="isSquare" id="isSquare"/><br/>
+<!-- Square Matrix: <input type="checkbox" name="isSquare" id="isSquare"/><br/> -->
 Augemented Matrix: <input type="checkbox" name="isAugmented" id="isAugemented"/><br/>
 <button type="submit">Set dimension</button>
 </form><br/>
-<form name="matrix_entries" id="matrix_entries" action="">
+<form name="matrix_entries" id="matrix_entries" method="get" action="">
 </form>
 <script type="text/javascript">
 $("#matrix_dim").submit(function(event){
