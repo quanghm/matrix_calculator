@@ -28,7 +28,7 @@ foreach ($_REQUEST['e'] as $nRow =>$aRow)
 
 $matrix =new matrix($aTestMatrix,$_REQUEST["augmented_rows"]);
 $matrix->displayEntries();
-$matrix->doGauss();
+inverse($matrix->entries);
 //$matrix->displayEntries();
 ?>
 </div>

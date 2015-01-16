@@ -262,4 +262,27 @@ function float2rat($n, $tolerance = 1.e-6,$mathLook=TRUE) {
 
 	if ($mathLook){return "$sign\\frac{".$h1."}{".$k1."}";}else{return "$sign$h1/$k1";}
 }
+
+function inverse(&$aMatrix){
+	$matrix = new matrix($aMatrix);
+	if ($matrix->isSquare()==FALSE){
+		return "Matrix is not square";
+	}
+	$aNewMatrix=$matrix->entries;
+	$nSize = $matrix->rowCount;
+	for ($nRow=1;$nRow<=$nSize;$nRow++)
+	{
+		$newRow=array_fill($nSize+1,$nSize,0);
+		for ($nCol=$nSize+1;$nCol<=2*$nSize;$nCol++)
+		{
+			if ($nCol-$nRow==$nSize)
+			{$aNewMatrix[$nRow][$nCol]=1;}
+			else{$aNewMatrix[$nRow][$nCol]=$newRow[$nCol];}
+		}
+	}
+	//print_r($aNewMatrix); die("");
+	$matrix = new matrix($aNewMatrix,$nSize);
+	$matrix->displayEntries();
+	$matrix->doGaussJordan();
+}
 ?>
