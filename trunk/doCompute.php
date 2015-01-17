@@ -28,7 +28,8 @@ foreach ($_REQUEST['e'] as $nRow =>$aRow)
 
 $matrix =new matrix($aTestMatrix,$_REQUEST["augmented_rows"]);
 $matrix->displayEntries();
-inverse($matrix->entries);
+//echo inverse($matrix->entries);
+$matrix->findDet();
 //$matrix->displayEntries();
 ?>
 </div>

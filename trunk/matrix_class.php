@@ -135,7 +135,7 @@ class matrix{
 	}
 	
 	//	Gauss
-	function doGauss(){
+	function doGauss($findDet=FALSE){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
 		$nColCount=$this->colCount;
@@ -234,6 +234,82 @@ class matrix{
 			}
 		}
 	}
+    function findDet(){
+        //    Check square
+        if (!($this->isSquare()))
+        {
+            return "Matrix is not square.";
+        }
+        //	set augmented cols to 0
+        $this->augementedCols=0;
+        
+        //  set det
+        $nDet=(float)1;
+        
+        //	Gauss
+        //	get dimensions of matrix
+        $nRowCount=$this->rowCount;
+        $nColCount=$this->colCount;
+        
+        //	set pivot to first entry
+        $aPivot=[0,0];
+        while ($aPivot!==0){
+        	echo "<hr/>";
+        	$aNewPivot=$this->findNextPivot($aPivot[0],$aPivot[1]);
+        	//print_r($aNewPivot);
+        		
+        	//	check if done
+        	if ($aNewPivot==0){
+        		return TRUE;
+        	}
+        		
+        	//	jump more than one row
+        	if ($aNewPivot[0]>$aPivot[0]+1)	{
+        	    $nDet*=-1;
+        		$this->interchangeRows($aNewPivot[0], $aPivot[0]+1);
+        		echo '\(';
+        		if ($nDet!==(float)1){echo float2rat($nDet);}
+        		echo '\det\)';
+        		$this->displayEntries(TRUE);
+        		echo "<br/>";
+        	}
+        		
+        		
+        	//	new pivot
+        	$aPivot[0]+=1;
+        	$aPivot[1]=$aNewPivot[1];
+        
+        		
+        	//	normalize the pivot row
+        	$nMultiplier=$this->entries[$aPivot[0]][$aPivot[1]];
+        	if ($nMultiplier!==(float)1){
+        		$nDet*=$nMultiplier;
+        		$this->multiplyRow($aPivot[0], 1/$nMultiplier);
+	        	
+        		echo '\(';
+        		if ($nDet!==(float)1){echo float2rat($nDet);}
+        		echo '\det\)';
+        		$this->displayEntries(TRUE);
+        		echo "<br/>";;
+        	}
+        
+        	//	kill entries in pivot columns
+        	for($nRow=$aPivot[0]+1;$nRow<=$nRowCount;$nRow++){
+	        	if ($this->entries[$nRow][$aPivot[0]]!=='0'){
+	        		$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
+	        		$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
+	        		
+	        		echo '\(';
+	        		if ($nDet!==(float)1){echo float2rat($nDet);}
+	        		echo '\det\)';
+	        		$this->displayEntries(TRUE);
+	        		echo "<br/>";
+	        	}
+	       	}
+        }
+        $nDet*=$this->entries[$nRowCount][$nColCount];
+        echo "Determinant <strong>$nDet</strong></br>";
+    }  
 }
 
 function float2rat($n, $tolerance = 1.e-6,$mathLook=TRUE) {
@@ -284,5 +360,14 @@ function inverse(&$aMatrix){
 	$matrix = new matrix($aNewMatrix,$nSize);
 	$matrix->displayEntries();
 	$matrix->doGaussJordan();
+	if ($matrix->entries[$nSize][$nSize]==1)
+	{
+	    return "invertible";
+	}
+	else 
+	{
+	    return "not invertible";
+	}
 }
+
 ?>
