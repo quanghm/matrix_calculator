@@ -29,7 +29,22 @@ foreach ($_REQUEST['e'] as $nRow =>$aRow)
 $matrix =new matrix($aTestMatrix,$_REQUEST["augmented_rows"]);
 $matrix->displayEntries();
 //echo inverse($matrix->entries);
-$matrix->findDet();
+
+switch ($_REQUEST["operationType"])
+{
+	case "Gauss":
+		$matrix->doGauss();
+		break;
+	case "Gauss-Jordan":
+		$matrix->doGaussJordan();
+		break;
+	case "findDet":
+		echo $matrix->findDet();
+		break;
+	case "inverse":
+		echo inverse($matrix->entries);
+		break;
+}
 //$matrix->displayEntries();
 ?>
 </div>

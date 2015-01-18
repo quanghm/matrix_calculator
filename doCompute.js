@@ -1,0 +1,90 @@
+/**
+ * 
+ */
+$("#matrix_dim").submit(function(event){
+	event.preventDefault();
+	$("#matrix_entries").empty();
+	num_rows=$("#num_rows").val();
+	num_cols=$("#num_cols").val();
+	augmented_cols =$("#augmentedCols").val();
+	$("<input/>",{
+		id: "augmented_Cols",
+		name: "augmented_Cols",
+		type: "hidden",
+		value: augmented_cols
+	}).appendTo("#matrix_entries");
+
+	for (row=1;row<=num_rows;row++)
+	{
+		for (col=1;col<=num_cols;col++)
+		{
+			//sNewEntryName="e["+row+"]["+col+"]";
+			sNewEntryName='entries[]';
+			if (col>num_cols-augmented_cols)
+			{
+				sEntryClass="augmented";
+			}
+			else
+			{
+				sEntryClass="entry";
+			}
+			$("<input/>",{
+			//	id: sNewEntryName,
+				name: sNewEntryName,
+				//pattern: '^[+-]?\\d*(.\\d*)?',
+				type: "text",
+				class: sEntryClass,
+				value: "0"
+			}).appendTo("#matrix_entries");
+		}
+		$("#matrix_entries").append("<br/>");
+	}
+})
+
+//	when matrix is submitted
+$("#frmMatrix").submit(function(event){
+	//	do not submit form
+	event.preventDefault();
+	
+	//	hide input and show output
+	$("#inputDiv").hide();
+	$("#outputDiv").show();
+	
+	//	set up matrix
+	num_rows=$("#num_rows").val();
+	num_cols=$("#num_cols").val();
+	augmented_cols =$("#augmentedCols").val();	
+	
+
+	var aMatrix = [];
+	var aInputMatrix = $("input[name='entries\\[\\]']");
+	
+	for (row=1;row<=num_rows;row++)
+	{
+		aMatrix[row]=[];	
+		for (col=1;col<=num_cols;col++)
+		{
+			aMatrix[row][col]=aInputMatrix.eq((row-1)*num_cols+(col-1)).val();
+		}
+	}	
+	
+	
+	//	new matrix object
+	objMatrix = new matrix(aMatrix,augmented_cols);
+	alert(objMatrix.rowCount);
+	//	display the matrix in output div
+	$("<span/>",{
+		id: "original_matrix",
+		name:	"original_matrix",
+		html: objMatrix.displayEntires()		
+	}).appendTo($("#outputDiv"));
+	//	what operation
+	
+	//	display result
+	//	$("#outputDiv").append(eleOutput);
+})
+$("#frmResult").submit(function(event){
+	event.preventDefault();
+	$("#inputDiv").show();
+	$("#outputDiv").hide();
+})

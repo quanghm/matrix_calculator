@@ -78,7 +78,7 @@ class matrix{
 		echo "multiply Row $nRowToBeMultiplied by \(".float2rat($nMultiplier)."\) and add to Row $nRowToBeModified<br/>";
 		return TRUE;
 	}
-	function findNextPivot($nStartRow,$nStartCol){
+	private function findNextPivot($nStartRow,$nStartCol){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
 		$nColCount=$this->colCount-$this->augementedCols;
@@ -102,7 +102,7 @@ class matrix{
 		return 0;
 	}
 	
-	function displayEntries($inline=FALSE,$mathLook=TRUE){
+	function displayEntries($pivotRow=0,$inline=FALSE,$mathLook=TRUE){
 		//	get dimensions of matrix
 		$nRowCount=$this->rowCount;
 		$nColCount=$this->colCount;
@@ -121,14 +121,17 @@ class matrix{
 			$sRowToDisplay="";
 			for ($nCol=1;$nCol<=$nColCount;$nCol++){
 				$sToBeAdded=float2rat($this->entries[$nRow][$nCol],1.e-6,$mathLook);
+				if ($nRow==$pivotRow){
+					$sToBeAdded="\\mathbf{".$sToBeAdded."}";
+				}
 				if ($nColCount-$nCol<$this->augementedCols)
 				{
 					$sToBeAdded="\\color{blue}{".$sToBeAdded."}";
 				}
 				$sRowToDisplay.=($sToBeAdded."&");
 			}
-			$sRowToDisplay=substr($sRowToDisplay, 0,-1);
-			echo $sRowToDisplay."\\\\ \r\n";
+			$sRowToDisplay=substr($sRowToDisplay, 0,-1)."\\\\ \r\n";
+			echo $sRowToDisplay;
 		}
 		echo "\\end{array}\\right)";
 		if ($inline) {echo "\\)";}else{echo "\\]";}
@@ -176,7 +179,7 @@ class matrix{
 			//	kill entries in pivot columns
 			for($nRow=$aPivot[0]+1;$nRow<=$nRowCount;$nRow++)
 			{
-				if ($this->entries[$nRow][$aPivot[0]]!=='0')
+				if (($this->entries[$nRow][$aPivot[1]]!==(float)0) and ($this->entries[$nRow][$aPivot[1]]!==0))
 				{
 					$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
 					$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
@@ -205,7 +208,7 @@ class matrix{
 			if ($aNewPivot[0]>$aPivot[0]+1)
 			{
 				$this->interchangeRows($aNewPivot[0], $aPivot[0]+1);
-				$this->displayEntries();
+				$this->displayEntries($aPivot[0]);
 			}
 			
 			
@@ -216,20 +219,20 @@ class matrix{
 			
 			//	normalize the pivot row
 			$nMultiplier=1/$this->entries[$aPivot[0]][$aPivot[1]];
-			if ($nMultiplier!==1)
+			if ($nMultiplier!==(float)1)
 			{
 				$this->multiplyRow($aPivot[0], $nMultiplier);
-				$this->displayEntries();
+				$this->displayEntries($aPivot[0]);
 			}
 	
 			//	kill entries in pivot columns
 			for($nRow=1;$nRow<=$nRowCount;$nRow++)
 			{
-				if (($nRow!==$aPivot[0])and ($this->entries[$nRow][$aPivot[0]]!=='0'))
+				if (($nRow!==$aPivot[0])and ($this->entries[$nRow][$aPivot[0]]!==0) and ($this->entries[$nRow][$aPivot[0]]!==(float)0))
 				{
 					$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
 					$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
-					$this->displayEntries();
+					$this->displayEntries($aPivot[0]);
 				}
 			}
 		}
@@ -240,6 +243,7 @@ class matrix{
         {
             return "Matrix is not square.";
         }
+        
         //	set augmented cols to 0
         $this->augementedCols=0;
         
@@ -267,10 +271,10 @@ class matrix{
         	if ($aNewPivot[0]>$aPivot[0]+1)	{
         	    $nDet*=-1;
         		$this->interchangeRows($aNewPivot[0], $aPivot[0]+1);
-        		echo '\(';
+        		echo '\(\color{red}{';
         		if ($nDet!==(float)1){echo float2rat($nDet);}
-        		echo '\det\)';
-        		$this->displayEntries(TRUE);
+        		echo '}\det\)';
+        		$this->displayEntries($aPivot[0],TRUE);
         		echo "<br/>";
         	}
         		
@@ -286,23 +290,23 @@ class matrix{
         		$nDet*=$nMultiplier;
         		$this->multiplyRow($aPivot[0], 1/$nMultiplier);
 	        	
-        		echo '\(';
+        		echo '\(\color{red}{';
         		if ($nDet!==(float)1){echo float2rat($nDet);}
-        		echo '\det\)';
-        		$this->displayEntries(TRUE);
+        		echo '}\det\)';
+        		$this->displayEntries($aPivot[0],TRUE);
         		echo "<br/>";;
         	}
         
         	//	kill entries in pivot columns
         	for($nRow=$aPivot[0]+1;$nRow<=$nRowCount;$nRow++){
-	        	if ($this->entries[$nRow][$aPivot[0]]!=='0'){
+	        	if ($this->entries[$nRow][$aPivot[0]]!==(float)0){
 	        		$nMultiplier=-$this->entries[$nRow][$aPivot[1]];
 	        		$this->addMultipleOfRow($nRow, $aPivot[0], $nMultiplier);
 	        		
-	        		echo '\(';
+	        		echo '\(\color{red}{';
 	        		if ($nDet!==(float)1){echo float2rat($nDet);}
-	        		echo '\det\)';
-	        		$this->displayEntries(TRUE);
+	        		echo '}\det\)';
+	        		$this->displayEntries($aPivot[0],TRUE);
 	        		echo "<br/>";
 	        	}
 	       	}

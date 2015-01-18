@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="php.js"></script>
+<script type="text/javascript" src="matrix_class.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<body>
+<div align="center">
+
+<script type="text/javascript">
+for (var nRow in _REQUEST) {
+	aRow = _REQUEST[nRow];
+	for (var nCol in aRow) {
+                        sEntry = aRow[nCol];
+		aTestMatrix[nRow][nCol]=sEntry;
+	}
+}
+	
+matrix =new matrix(aTestMatrix,_REQUEST["augmented_rows"]);
+matrix.displayEntries();
+
+
+ (_REQUEST["operationType"])
+{
+	 "Gauss"
+		matrix.doGauss();
+		break;
+	 "Gauss-Jordan"
+		matrix.doGaussJordan();
+		break;
+	 "findDet"
+		document.write( matrix.findDet());
+		break;
+	 "inverse"
+		document.write( inverse(matrix.entries));
+		break;
+}
+
+</script>
+</div>
+</body>

@@ -6,3 +6,6 @@ input.augmented{
 	width: 24px;
 	background-color:#CBCBCB;
 }
+div.hidden{
+	display:none;
+}
