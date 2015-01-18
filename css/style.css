@@ -8,4 +8,6 @@ input.augmented{
 }
 div.hidden{
 	display:none;
+	text-align: center;
+	align: center;
 }
