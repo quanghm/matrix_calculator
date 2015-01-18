@@ -34,7 +34,7 @@ $("#matrix_dim").submit(function(event){
 				//pattern: '^[+-]?\\d*(.\\d*)?',
 				type: "text",
 				class: sEntryClass,
-				value: Math.floor(rand(0,2))
+				value: Math.floor(rand(-2,2))
 			}).appendTo("#matrix_entries");
 		}
 		$("#matrix_entries").append("<br/>");
@@ -73,17 +73,21 @@ $("#frmMatrix").submit(function(event){
 //	//	display the matrix in output div
 	writeOutputToElement("original_matrix",objMatrix.displayEntries());		
 	//	what operation
-//	writeOutputToElement("step0",objMatrix.multiplyRow(1,x));
-//	writeOutputToElement("step1",objMatrix.addMultipleOfRow(2,1,1.2));
-//	writeOutputToElement("step2",objMatrix.displayEntries());		
-//	writeOutputToElement("step3",objMatrix.interchangeRows(2,1));
-//	writeOutputToElement("step4",objMatrix.displayEntries());		
-	
-	objMatrix.doGauss();
-//	writeOutputToElement("Test",objMatrix.findNextPivot(1,1));
+	switch ($("#operationType").val())
+	{
+		case "Gauss":
+			writeOutputToElement("computation_result",objMatrix.doGauss());
+			break;
+		case "Gauss-Jordan":
+			writeOutputToElement("computation_result",objMatrix.doGaussJordan());
+			break;
+		case "findDet":
+			writeOutputToElement("computation_result",objMatrix.findDet());
+			break;
+		case "inverse":
+			writeOutputToElement("computation_result",inverse(objMatrix.entries));
+	}
 
-	//	display result
-	//	$("#outputDiv").append(eleOutput);
 })
 $("#frmResult").submit(function(event){
 	event.preventDefault();

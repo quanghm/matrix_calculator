@@ -2,6 +2,9 @@
 input.entry{
 	width: 24px;
 }
+input.entry:focus{
+	background-color:yellow;
+}
 input.augmented{
 	width: 24px;
 	background-color:#CBCBCB;

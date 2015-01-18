@@ -10,7 +10,8 @@ float2rat = function(n, mathlook,tolerance)
 	var k2=0;
 	var b=0;
 	var a=0;
-	if (tolerance==undefined) {tolerance=0.0001;}
+	var sign="";
+	if (tolerance==undefined) {tolerance=0.00001;}
 	if (mathlook==undefined) {mathlook=true;}
 	if (n==0)
 	{
@@ -33,8 +34,9 @@ float2rat = function(n, mathlook,tolerance)
 		aux = h1; h1 = a*h1+h2; h2 = aux;
 		aux = k1; k1 = a*k1+k2; k2 = aux;
 		b = b-a;
-	} while (abs(n-h1/k1) > n*tolerance);
+	} while (abs(n-h1/k1) > tolerance);
 
+	if (k1==1) {return sign+h1;}
 	if (mathlook){return sign+'\\frac{'+h1+"}{"+k1+"}";}else{return sign+h1+'/'+k1;}
 }
 
@@ -50,16 +52,11 @@ function matrix(aRequests,nAugmented) {
 
 	//	if this is not an augemented matrix, return 0.
 	//	otherwise return the number of augemented columns
-	this.augementedCols=nAugmented;
+	this.augementedCols=(nAugmented==undefined)?(0):(nAugmented);
 
-	//	array of entries
-	//this.entries = [[]];
+	// if no augemented columns
 
-	//	set entries along with dimensions
-	//this.__construct = function(){
-		// if no augemented columns
-		if (nAugmented==undefined) {nAugmented=0;}
-	//}
+
 		
 	//	if this is a square matrix
 	 this.isSquare = function(){
@@ -237,7 +234,7 @@ function matrix(aRequests,nAugmented) {
 			
 			//	check if done
 			if (aNewPivot==0){
-				return 0;
+				return this.displayEntries();
 			}
 			
 			//	jump more than one row
@@ -246,7 +243,7 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;
 				sNextStepID = "Solution"+nStepCount;
 				writeOutputToElement("explanation"+nStepCount,this.interchangeRows(aNewPivot[0], aPivot[0]+1));
-				writeOutputToElement(sNextStepID,this.displayEntries());
+				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]+1));
 			}
 			
 			//	new pivot
@@ -262,189 +259,226 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;				
 				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
 				sNextStepID = "Solution"+nStepCount;
-				writeOutputToElement(sNextStepID,this.displayEntries());
+				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
 			}
-	
+			
 			//	kill entries in pivot columns
-			for (nRow=aPivot[0]+1; nRow<=nRowCount; nRow++)
+			for (row=aPivot[0]+1;row<=nRowCount;row++) 
 			{
-				if (this.entries[nRow][aPivot[1]]!=0)// && (this.entries[nRow][aPivot[1]]!=0))
+				if (this.entries[row][aPivot[1]]!=0)// && (this.entries[nRow][aPivot[1]]!=0))
 				{
-					nMultiplier=-this.entries[nRow][aPivot[1]];
+					nMultiplier=-this.entries[row][aPivot[1]];
 					nStepCount++;				
-					writeOutputToElement("Hello"+nStepCount,nRow+":"+nMultiplier+"<br/>");	
-					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(nRow, aPivot[0], nMultiplier));
+					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(row, aPivot[0], nMultiplier));
 					sNextStepID = "Solution"+nStepCount;
-					writeOutputToElement(sNextStepID,this.displayEntries());
+					writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
 				}
 			}
 		}
 	}
 //	//	Gauss-Jordan
-//	this.doGaussJordan = function(){
-//			//	get dimensions of matrix
-//		nRowCount=this.rowCount;
-//		nColCount=this.colCount;
-//	
-//		//	set pivot to first entry
-//		aPivot=[0,0];
-//		while (aPivot!==0){
-//			aNewPivot=this.findNextPivot(aPivot[0],aPivot[1]);
-//			
-//			//	check if done
-//			if (aNewPivot==0){
-//				return TRUE;
-//			}
-//			
-//			//	jump more than one row
-//			if (aNewPivot[0]>aPivot[0]+1)
-//			{
-//				this.interchangeRows(aNewPivot[0], aPivot[0]+1);
-//				this.displayEntries(aPivot[0]);
-//			}
-//			
-//			
-//			//	new pivot
-//			aPivot[0]+=1;
-//			aPivot[1]=aNewPivot[1];
-//
-//			
-//			//	normalize the pivot row
-//			nMultiplier=1/this.entries[aPivot[0]][aPivot[1]];
-//			if (nMultiplier!==1)
-//			{
-//				this.multiplyRow(aPivot[0], nMultiplier);
-//				this.displayEntries(aPivot[0]);
-//			}
-//	
-//			//	kill entries in pivot columns
-//			(nRow=1;nRow<=nRowCount;nRow++)
-//			{
-//				if ((nRow!==aPivot[0])AND (this.entries[nRow][aPivot[0]]!==0) AND (this.entries[nRow][aPivot[0]]!==0))
-//				{
-//					nMultiplier=-this.entries[nRow][aPivot[1]];
-//					this.addMultipleOfRow(nRow, aPivot[0], nMultiplier);
-//					this.displayEntries(aPivot[0]);
-//				}
-//			}
-//		}
-//	}
-//    this.findDet = function(){
-//        //    Check square
-//        if ((this.isSquare()))
-//        {
-//            return "Matrix is not square.";
-//        }
-//        
-//        //	set augmented cols to 0
-//        this.augementedCols=0;
-//        
-//        //  set det
-//        nDet=1;
-//        
-//        //	Gauss
-//        //	get dimensions of matrix
-//        nRowCount=this.rowCount;
-//        nColCount=this.colCount;
-//        
-//        //	set pivot to first entry
-//        aPivot=[0,0];
-//        while (aPivot!==0){
-//        	document.write( "<hr/>");
-//        	aNewPivot=this.findNextPivot(aPivot[0],aPivot[1]);
-//        	//print_r($aNewPivot);
-//        		
-//        	//	check if done
-//        	if (aNewPivot==0){
-//        		return TRUE;
-//        	}
-//        		
-//        	//	jump more than one row
-//        	if (aNewPivot[0]>aPivot[0]+1)	{
-//        	    nDet*=-1;
-//        		this.interchangeRows(aNewPivot[0], aPivot[0]+1);
-//        		document.write( '\(\color{red}{');
-//        		if (nDet!==1){document.write( float2rat(nDet));}
-//        		document.write( '}\det\)');
-//        		this.displayEntries(aPivot[0],TRUE);
-//        		document.write( "<br/>");
-//        	}
-//        		
-//        		
-//        	//	new pivot
-//        	aPivot[0]+=1;
-//        	aPivot[1]=aNewPivot[1];
-//        
-//        		
-//        	//	normalize the pivot row
-//        	nMultiplier=this.entries[aPivot[0]][aPivot[1]];
-//        	if (nMultiplier!==1){
-//        		nDet*=nMultiplier;
-//        		this.multiplyRow(aPivot[0], 1/nMultiplier);
-//	        	
-//        		document.write( '\(\color{red}{');
-//        		if (nDet!==1){document.write( float2rat(nDet));}
-//        		document.write( '}\det\)');
-//        		this.displayEntries(aPivot[0],TRUE);
-//        		document.write( "<br/>");;
-//        	}
-//        
-//        	//	kill entries in pivot columns
-//        	(nRow=aPivot[0]+1;nRow<=nRowCount;nRow++){
-//	        	if (this.entries[nRow][aPivot[0]]!==0){
-//	        		nMultiplier=-this.entries[nRow][aPivot[1]];
-//	        		this.addMultipleOfRow(nRow, aPivot[0], nMultiplier);
-//	        		
-//	        		document.write( '\(\color{red}{');
-//	        		if (nDet!==1){document.write( float2rat(nDet));}
-//	        		document.write( '}\det\)');
-//	        		this.displayEntries(aPivot[0],TRUE);
-//	        		document.write( "<br/>");
-//	        	}
-//	       	}
-//        }
-//        nDet*=this.entries[nRowCount][nColCount];
-//        document.write( nDet);
-//    }  
-//}
+	this.doGaussJordan = function(findDet)
+	{
+		//	disable determinant display
+		if (findDet==undefined){findDet=false;}
+		
+		//	step count
+		var nStepCount=0;
+		
+		//	get dimensions of matrix
+		var nRowCount=this.rowCount;
+		var nColCount=this.colCount;
+	
+		var nMultiplier=0;
+		var sNextStepID="";
+		
+		//	set pivot to first entry
+		var aPivot=[0,0];
+		var aNewPivot=[];
+		
+		while (aPivot!=0)
+		{
+			aNewPivot=this.findNextPivot(aPivot[0],aPivot[1]);
+			
+			//	check if done
+			if (aNewPivot==0){
+				return this.displayEntries();
+			}
+			
+			//	jump more than one row
+			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
+			{
+				nStepCount++;
+				sNextStepID = "Solution"+nStepCount;
+				writeOutputToElement("explanation"+nStepCount,this.interchangeRows(aNewPivot[0], aPivot[0]+1));
+				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+			}
+			
+			//	new pivot
+			aPivot[0]=aPivot[0]+parseFloat(1);
+			aPivot[1]=aNewPivot[1];
 
-//this.inverse = function(aMatrix){
-//	matrix = new matrix(aMatrix);
-//	if (matrix.isSquare()==FALSE){
-//		return "Matrix is not square";
-//	}
-//	aNewMatrix=matrix.entries;
-//	nSize = matrix.rowCount;
-//	 (nRow=1;nRow<=nSize;nRow++)
-//	{
-//		newRow=array_fill(nSize+1,nSize,0);
-//		 (nCol=nSize+1;nCol<=2*nSize;nCol++)
-//		{
-//			if (nCol-nRow==nSize)
-//			{aNewMatrix[nRow][nCol]=1;}
-//			else{aNewMatrix[nRow][nCol]=newRow[nCol];}
-//		}
-//	}
-//	//print_r($aNewMatrix); die("");
-//	matrix = new matrix(aNewMatrix,nSize);
-//	matrix.displayEntries();
-//	matrix.doGaussJordan();
-//	if (matrix.entries[nSize][nSize]==1)
-//	{
-//	    return "invertible";
-//	}
-//	else 
-//	{
-//	    return "not invertible";
-//	}
+			//	normalize the pivot row
+			nMultiplier=this.entries[aPivot[0]][aPivot[1]];
 
+			if (nMultiplier!=1)
+			{
+				nMultiplier=1/parseFloat(nMultiplier);
+				nStepCount++;				
+				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
+				sNextStepID = "Solution"+nStepCount;
+				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+			}
+			
+			//	kill entries in pivot columns
+			for (row=1;row<=nRowCount;row++) 
+			{
+				if ((this.entries[row][aPivot[1]]!=0) && (row!=aPivot[0]))
+				{
+					nMultiplier=-this.entries[row][aPivot[1]];
+					nStepCount++;				
+					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(row, aPivot[0], nMultiplier));
+					sNextStepID = "Solution"+nStepCount;
+					writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+				}
+			}
+		}
+	}
+
+   this.findDet = function()
+	{
+	   	//	determinant
+		var nDet=1;	
+		//	det display
+		var sDet="";
+		
+		//	step count
+		var nStepCount=0;
+		
+		//	get dimensions of matrix
+		var nRowCount=this.rowCount;
+		var nColCount=this.colCount;
+	
+		var nMultiplier=0;
+		var sNextStepID="";
+		
+		//	set pivot to first entry
+		var aPivot=[0,0];
+		var aNewPivot=[];
+		
+		if (!(this.isSquare())){return "This is not a square matrix";}
+		while (aPivot!=0)
+			{
+			aNewPivot=this.findNextPivot(aPivot[0],aPivot[1]);
+			
+			//	check if done
+			if (aNewPivot==0){
+				break;
+			}
+			
+			//	jump more than one row
+			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
+			{
+				nStepCount++;
+				sNextStepID = "Solution"+nStepCount;
+				writeOutputToElement("explanation"+nStepCount,this.interchangeRows(aNewPivot[0], aPivot[0]+1));
+				nDet*=-1;
+				switch ( nDet ){
+					case 1:
+						sDet="\\(\\det\\)";
+						break;
+					case -1:
+						sDet="\\(-\\det\\)";
+						break;
+					default:
+						sDet="\\("+float2rat(nDet)+"\\det\\)";
+				}
+				writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+			}
+			
+			//	new pivot
+			aPivot[0]=aPivot[0]+parseFloat(1);
+			aPivot[1]=aNewPivot[1];
+
+			//	normalize the pivot row
+			nMultiplier=this.entries[aPivot[0]][aPivot[1]];
+			//	new det
+			nDet*=nMultiplier;
+			
+			if (nMultiplier!=1)
+			{
+				nMultiplier=1/parseFloat(nMultiplier);
+				nStepCount++;				
+				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
+				sNextStepID = "Solution"+nStepCount;
+				
+				//	display det
+				switch ( nDet ){
+					case 1:
+						sDet="\\(\\det\\)";
+						break;
+					case -1:
+						sDet="\\(-\\det\\)";
+						break;
+					default:
+						sDet="\\("+float2rat(nDet)+"\\det\\)";
+				}
+				writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+			}
+			
+			//	kill entries in pivot columns
+			for (row=aPivot[0]+1;row<=nRowCount;row++) 
+			{
+				if (this.entries[row][aPivot[1]]!=0)// && (this.entries[nRow][aPivot[1]]!=0))
+				{
+					nMultiplier=-this.entries[row][aPivot[1]];
+					nStepCount++;				
+					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(row, aPivot[0], nMultiplier));
+					sNextStepID = "Solution"+nStepCount;
+					writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+				}
+			}
+		}
+		return nDet;
+	}
 }
+inverse = function(aMatrix){
+	augmentedMatrix = new matrix(aMatrix);
+	if (augmentedMatrix.isSquare()==false){
+		return "Matrix is not square";
+	}
+	aNewMatrix=augmentedMatrix.entries;
+	nSize = augmentedMatrix.rowCount;
+	for (row=1;row<=nSize;row++)
+	{
+		newRow=array_fill(nSize+1,nSize,0);
+		for (col=nSize+1;col<=2*nSize;col++)
+		{
+			if (col-row==nSize)
+			{aNewMatrix[row][col]=1;}
+			else{aNewMatrix[row][col]=newRow[col];}
+		}
+	}
+	//print_r($aNewMatrix); die("");
+	augmentedMatrix = new matrix(aNewMatrix,nSize);
+	writeOutputToElement("augmented_matrix",augmentedMatrix.displayEntries());
+	augmentedMatrix.doGaussJordan();
+	if (augmentedMatrix.entries[nSize][nSize]==1)
+	{
+	    return "invertible";
+	}
+	else 
+	{
+	    return "not invertible";
+	}
+}
+
 
 function writeOutputToElement(sElementID,sStringToAdd)
 {
-	$("<span/>",{
+	$("<p/>",{
 		id: sElementID,
-		name:	sElementID,
+		name: sElementID,
 		html: sStringToAdd		
 	}).appendTo($("#outputDiv"));
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,"outputDiv"]);
