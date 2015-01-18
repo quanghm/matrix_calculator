@@ -339,7 +339,10 @@ function float2rat($n, $tolerance = 1.e-6,$mathLook=TRUE) {
 		$aux = $k1; $k1 = $a*$k1+$k2; $k2 = $aux;
 		$b = $b-$a;
 	} while (abs($n-$h1/$k1) > $n*$tolerance);
-
+	
+	//	if integer
+	if ($k1==1) {return $sign.$h1;}
+	
 	if ($mathLook){return "$sign\\frac{".$h1."}{".$k1."}";}else{return "$sign$h1/$k1";}
 }
 
