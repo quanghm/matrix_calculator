@@ -141,7 +141,7 @@ function matrix(aRequests,nAugmented) {
 			{
 				this.entries[nRow][nCol]=this.entries[nRow][nCol]*nMultiplier;
 			}
-			return "multiply Row "+nRow+" by \\("+float2rat(nMultiplier)+"\\)<br/>";
+			return "<div class='explanation'>multiply Row "+nRow+" by \\("+float2rat(nMultiplier)+"\\)</div>";
 		}
 	}
 	
@@ -161,7 +161,7 @@ function matrix(aRequests,nAugmented) {
 			this.entries[nRow1]=this.entries[nRow2];
 			this.entries[nRow2]=tmp;
 		}
-		return("interchange Row "+nRow1+" and Row "+nRow2+"<br/>");
+		return("<div class='explanation'>interchange Row "+nRow1+" and Row "+nRow2+"</div>");
 	}
 
 	/*	add a multiple of a row to another row 	 */
@@ -177,7 +177,7 @@ function matrix(aRequests,nAugmented) {
 				this.entries[nRowToBeModified][nCol]=parseFloat(this.entries[nRowToBeMultiplied][nCol]*nMultiplier)+parseFloat(this.entries[nRowToBeModified][nCol]);
 			}
 		}
-		return("multiply Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"<br>");
+		return("<div class='explanation'>multiply Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"</div>");
 	}
 
 	this.findNextPivot = function(nStartRow,nStartCol){
@@ -259,7 +259,7 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;
 				sNextStepID = "step"+nStepCount;
 				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
-				sStepOutput+=this.displayEntries(aPivot[0]+1);
+				sStepOutput+=this.displayEntries(aPivot[0]);
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -272,7 +272,7 @@ function matrix(aRequests,nAugmented) {
 					nStepCount++;
 					sNextStepID = "step"+nStepCount;
 					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
-					sStepOutput+=this.displayEntries(aPivot[0]+1);
+					sStepOutput+=this.displayEntries(aPivot[0]);
 					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
@@ -330,7 +330,7 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;
 				sNextStepID = "step"+nStepCount;
 				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
-				sStepOutput+=this.displayEntries(aPivot[0]+1);
+				sStepOutput+=this.displayEntries(aPivot[0]);
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -343,7 +343,7 @@ function matrix(aRequests,nAugmented) {
 					nStepCount++;
 					sNextStepID = "step"+nStepCount;
 					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
-					sStepOutput+=this.displayEntries(aPivot[0]+1);
+					sStepOutput+=this.displayEntries(aPivot[0]);
 					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
@@ -399,8 +399,7 @@ function matrix(aRequests,nAugmented) {
 					default:
 						sDet="\\("+float2rat(nDet)+"\\det\\)";
 				}
-				sStepOutput+=sDet;
-				sStepOutput+=this.displayEntries(aPivot[0],true);
+				sStepOutput+=("<div class='matrixEntries'>"+sDet+this.displayEntries(aPivot[0],true)+"</div>");
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -431,8 +430,7 @@ function matrix(aRequests,nAugmented) {
 					default:
 						sDet="\\("+float2rat(nDet)+"\\det\\)";
 				}
-				sStepOutput+=sDet;
-				sStepOutput+=this.displayEntries(aPivot[0],true);
+				sStepOutput+=("<div class='matrixEntries'>"+sDet+this.displayEntries(aPivot[0],true)+"</div>");
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -445,8 +443,7 @@ function matrix(aRequests,nAugmented) {
 					nStepCount++;	
 					sNextStepID="step"+nStepCount;
 					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
-					sStepOutput+=sDet;
-					sStepOutput+=this.displayEntries(aPivot[0],true);
+					sStepOutput+=("<div class='matrixEntries'>"+sDet+this.displayEntries(aPivot[0],true)+"</div>");
 					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
