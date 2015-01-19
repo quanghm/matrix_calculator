@@ -79,16 +79,41 @@ $("#frmMatrix").submit(function(event){
 			writeOutputToElement("computation_result",objMatrix.doGauss(),"step");
 			break;
 		case "Gauss-Jordan":
-			writeOutputToElement("computation_result",objMatrix.doGaussJordan());
+			writeOutputToElement("computation_result",objMatrix.doGaussJordan(),"step");
 			break;
 		case "findDet":
-			writeOutputToElement("computation_result",objMatrix.findDet());
+			writeOutputToElement("computation_result",objMatrix.findDet(),"step");
 			break;
 		case "inverse":
-			writeOutputToElement("computation_result",inverse(objMatrix.entries));
+			writeOutputToElement("computation_result",inverse(objMatrix.entries),"step");
 	}
 	initSlider();
 })
+
+function initSlider(){
+	$("#step1").toggleClass("stepshow");
+}
+
+
+$("#previous").click(function(){
+	var currStep = $("div.stepshow");
+	if (currStep.attr("id")!="step1")
+	{
+		currStep.toggleClass("stepshow");
+		currStep.prev	().toggleClass("stepshow");
+	}
+});
+
+
+$("#next").click(function(){
+	var currStep = $("div.stepshow");
+	if (currStep.attr("id")!="computation_result")
+	{
+		currStep.toggleClass("stepshow");
+		currStep.next().toggleClass("stepshow");
+	}
+});
+
 $("#frmResult").submit(function(event){
 	event.preventDefault();
 	$("#slider").empty();

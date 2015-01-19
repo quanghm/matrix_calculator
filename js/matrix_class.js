@@ -261,10 +261,6 @@ function matrix(aRequests,nAugmented) {
 				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
 				sStepOutput+=this.displayEntries(aPivot[0]+1);
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
-//				nStepCount++;				
-//				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
-//				sNextStepID = "Solution"+nStepCount;
-//				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
 			}
 			
 			//	kill entries in pivot columns
@@ -278,9 +274,6 @@ function matrix(aRequests,nAugmented) {
 					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
 					sStepOutput+=this.displayEntries(aPivot[0]+1);
 					writeOutputToElement(sNextStepID,sStepOutput,"step");
-//					writeOutputToElement("Explanation"+nStepCount,);
-//					sNextStepID = "Solution"+nStepCount;
-//					writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
 				}
 			}
 		}
@@ -311,16 +304,17 @@ function matrix(aRequests,nAugmented) {
 			
 			//	check if done
 			if (aNewPivot==0){
-				return this.displayEntries();
+				return "Row Echelon Form:<br/>"+this.displayEntries();
 			}
 			
 			//	jump more than one row
 			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
 			{
 				nStepCount++;
-				sNextStepID = "Solution"+nStepCount;
-				writeOutputToElement("explanation"+nStepCount,this.interchangeRows(aNewPivot[0], aPivot[0]+1));
-				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+				sNextStepID = "step"+nStepCount;
+				sStepOutput=this.interchangeRows(aNewPivot[0], aPivot[0]+1);
+				sStepOutput+=this.displayEntries(aPivot[0]+1);
+				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
 			//	new pivot
@@ -333,10 +327,11 @@ function matrix(aRequests,nAugmented) {
 			if (nMultiplier!=1)
 			{
 				nMultiplier=1/parseFloat(nMultiplier);
-				nStepCount++;				
-				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
-				sNextStepID = "Solution"+nStepCount;
-				writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+				nStepCount++;
+				sNextStepID = "step"+nStepCount;
+				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
+				sStepOutput+=this.displayEntries(aPivot[0]+1);
+				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
 			//	kill entries in pivot columns
@@ -345,10 +340,11 @@ function matrix(aRequests,nAugmented) {
 				if ((this.entries[row][aPivot[1]]!=0) && (row!=aPivot[0]))
 				{
 					nMultiplier=-this.entries[row][aPivot[1]];
-					nStepCount++;				
-					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(row, aPivot[0], nMultiplier));
-					sNextStepID = "Solution"+nStepCount;
-					writeOutputToElement(sNextStepID,this.displayEntries(aPivot[0]));
+					nStepCount++;
+					sNextStepID = "step"+nStepCount;
+					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
+					sStepOutput+=this.displayEntries(aPivot[0]+1);
+					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
 		}
@@ -370,6 +366,7 @@ function matrix(aRequests,nAugmented) {
 	
 		var nMultiplier=0;
 		var sNextStepID="";
+		var sStepOutput="";
 		
 		//	set pivot to first entry
 		var aPivot=[0,0];
@@ -389,8 +386,8 @@ function matrix(aRequests,nAugmented) {
 			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
 			{
 				nStepCount++;
-				sNextStepID = "Solution"+nStepCount;
-				writeOutputToElement("explanation"+nStepCount,this.interchangeRows(aNewPivot[0], aPivot[0]+1));
+				sNextStepID = "step"+nStepCount;
+				sStepOutput=this.interchangeRows(aNewPivot[0], aPivot[0]+1);
 				nDet*=-1;
 				switch ( nDet ){
 					case 1:
@@ -402,7 +399,9 @@ function matrix(aRequests,nAugmented) {
 					default:
 						sDet="\\("+float2rat(nDet)+"\\det\\)";
 				}
-				writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+				sStepOutput+=sDet;
+				sStepOutput+=this.displayEntries(aPivot[0],true);
+				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
 			//	new pivot
@@ -417,10 +416,10 @@ function matrix(aRequests,nAugmented) {
 			if (nMultiplier!=1)
 			{
 				nMultiplier=1/parseFloat(nMultiplier);
-				nStepCount++;				
-				writeOutputToElement("explanation"+nStepCount,this.multiplyRow(aPivot[0], nMultiplier));
-				sNextStepID = "Solution"+nStepCount;
-				
+				nStepCount++;	
+				sNextStepID = "step"+nStepCount;
+				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
+
 				//	display det
 				switch ( nDet ){
 					case 1:
@@ -432,7 +431,9 @@ function matrix(aRequests,nAugmented) {
 					default:
 						sDet="\\("+float2rat(nDet)+"\\det\\)";
 				}
-				writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+				sStepOutput+=sDet;
+				sStepOutput+=this.displayEntries(aPivot[0],true);
+				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
 			//	kill entries in pivot columns
@@ -441,10 +442,12 @@ function matrix(aRequests,nAugmented) {
 				if (this.entries[row][aPivot[1]]!=0)// && (this.entries[nRow][aPivot[1]]!=0))
 				{
 					nMultiplier=-this.entries[row][aPivot[1]];
-					nStepCount++;				
-					writeOutputToElement("Explanation"+nStepCount,this.addMultipleOfRow(row, aPivot[0], nMultiplier));
-					sNextStepID = "Solution"+nStepCount;
-					writeOutputToElement(sNextStepID,sDet+this.displayEntries(0,true));
+					nStepCount++;	
+					sNextStepID="step"+nStepCount;
+					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
+					sStepOutput+=sDet;
+					sStepOutput+=this.displayEntries(aPivot[0],true);
+					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
 		}
@@ -470,7 +473,7 @@ inverse = function(aMatrix){
 	}
 	//print_r($aNewMatrix); die("");
 	augmentedMatrix = new matrix(aNewMatrix,nSize);
-	writeOutputToElement("augmented_matrix",augmentedMatrix.displayEntries());
+	writeOutputToElement("augemented_matrix",augmentedMatrix.displayEntries(),"step");
 	augmentedMatrix.doGaussJordan();
 	if (float2rat(augmentedMatrix.entries[nSize][nSize])==1)
 	{
