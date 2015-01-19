@@ -15,5 +15,8 @@ div.hidden{
 	align: center;
 }
 .step{
-	display:none;
+	display:none; 
+}
+.stepshow{
+	display:block;
 }
