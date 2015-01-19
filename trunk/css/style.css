@@ -14,3 +14,6 @@ div.hidden{
 	text-align: center;
 	align: center;
 }
+.step{
+	display:none;
+}
