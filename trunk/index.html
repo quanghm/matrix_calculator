@@ -7,12 +7,10 @@
 <title>Insert title here</title>
 
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
-<!-- <link href="css/slide.css" rel="stylesheet" type="text/css"/> -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/javascript" src="js/php.js"></script>
 <script type="text/javascript" src="js/matrix_class.js"></script>
-<!-- <script type="text/javascript" src="js/myslide.js"></script> -->
 </head>
 <body>
 <div id="inputDiv">
@@ -37,9 +35,10 @@
 	<div id="outputDiv" > 
 	<div id="slider"></div>
 	</div>
-<form id="frmResult"> 
-<a id="previous">Previous</a><button type="submit">Back</button><a id="next">Next</a>
-</form>
+<div id="StepCtrl">
+<a id="first"> |<< </a><a id="previous"> << </a>
+<a id="goBack">Back</button><a id="next">>></a><a id="last">>>|</a>
+</div>
 </div>
 
 <script type="text/javascript" src="js/doCompute.js"></script>

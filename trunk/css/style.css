@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+div{
+	margin:0 auto;
+}
 input.entry{
 	width: 24px;
 }
@@ -14,9 +17,38 @@ div.hidden{
 	text-align: center;
 	align: center;
 }
-.step{
-	display:none; 
+
+#StepCtrl{
+	padding:15px;
+	margin: 0 auto;
 }
-.stepshow{
-	display:block;
+
+#StepCtrl a{
+	width: 100px;
+	height:30px;
+	background-color: gray;
+	opacity: 0.8;
+	padding:5px;
+	margin:5px;
+	color:greenyellow;
+}
+
+/* output div classes
+*/
+
+/* 	div element for each step classes */
+/* 	default: no display */
+/* 	toggle: show */
+	.step{
+		display:none; 
+	}
+	.stepshow{
+		display:block;
+	}
+
+/* div element for explanation	 */
+div.explanation{
+	width:50%;
+	text-align:center;
+	margin: 0 auto;
 }

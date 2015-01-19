@@ -17,14 +17,6 @@ foreach ($_REQUEST['e'] as $nRow =>$aRow)
 		$aTestMatrix[$nRow][$nCol]=(float)$sEntry;
 	}
 }
-	
-// for($nRow=1;$nRow<5;$nRow++)
-// {
-// 	for ($nCol=1;$nCol<5;$nCol++)
-// 	{
-// 		$aTestMatrix[$nRow][$nCol]=rand(0,8);//*($nRow-1);//$nRow+$nCol+$nRow*$nCol;
-// 	}
-// }
 
 $matrix =new matrix($aTestMatrix,$_REQUEST["augmented_rows"]);
 $matrix->displayEntries();

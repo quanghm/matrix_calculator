@@ -70,7 +70,7 @@ $("#frmMatrix").submit(function(event){
 	
 	//	new matrix object
 	objMatrix = new matrix(aMatrix,augmented_cols);
-//	//	display the matrix in output div
+//	display the matrix in output div
 	writeOutputToElement("original_matrix",objMatrix.displayEntries());		
 	//	what operation
 	switch ($("#operationType").val())
@@ -94,7 +94,7 @@ function initSlider(){
 	$("#step1").toggleClass("stepshow");
 }
 
-
+//	Step control form
 $("#previous").click(function(){
 	var currStep = $("div.stepshow");
 	if (currStep.attr("id")!="step1")
@@ -114,7 +114,7 @@ $("#next").click(function(){
 	}
 });
 
-$("#frmResult").submit(function(event){
+$("#goBack").click(function(event){
 	event.preventDefault();
 	$("#slider").empty();
 	$("#inputDiv").show();
