@@ -141,7 +141,13 @@ function matrix(aRequests,nAugmented) {
 			{
 				this.entries[nRow][nCol]=this.entries[nRow][nCol]*nMultiplier;
 			}
-			return "<div class='explanation'>multiply Row "+nRow+" by \\("+float2rat(nMultiplier)+"\\)</div>";
+			if (nMultiplier==-1){
+				return "<div class='explanation'>Change sign of Row "+nMultiplier+"</div>";
+			}
+			if (Number.isInteger(1/nMultiplier)){
+				return "<div class='explanation'> Divide Row "+nRow+" by \\("+float2rat(1/nMultiplier)+"\\)</div>"
+			}
+			return "<div class='explanation'>Multiply Row "+nRow+" by \\("+float2rat(nMultiplier)+"\\)</div>";
 		}
 	}
 	
@@ -176,8 +182,32 @@ function matrix(aRequests,nAugmented) {
 			for (nCol=1;nCol<=nColCount;nCol++){
 				this.entries[nRowToBeModified][nCol]=parseFloat(this.entries[nRowToBeMultiplied][nCol]*nMultiplier)+parseFloat(this.entries[nRowToBeModified][nCol]);
 			}
+			if (nMultiplier==-1){
+				return("<div class='explanation'>Substract Row "+nRowToBeMultiplied+" from Row "+nRowToBeModified+"</div>");
+			}
+			if (nMultiplier==1){
+				return("<div class='explanation'>Add Row "+nRowToBeMultiplied+" to Row "+nRowToBeModified+"</div>");
+			}
+			if (nMultiplier<0){
+				if (Number.isInteger(1/nMultiplier)){
+					return ("<div class='explanation'>Divide Row "+nRowToBeMultiplied+" by \\("+float2rat(-1/nMultiplier)+"\\) and substract from Row "+nRowToBeModified+"</div>");
+				}
+				else {
+					return ("<div class='explanation'>Multiply Row "+nRowToBeMultiplied+" by \\("+float2rat(-nMultiplier)+"\\) and substract from Row "+nRowToBeModified+"</div>");
+				}
+			}
+			else{
+				if (Number.isInteger(1/nMultiplier)){
+					return ("<div class='explanation'>Divide Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"</div>");
+				}
+				else{
+					return("<div class='explanation'>Multiply Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"</div>")	;	
+				}
+			}
+			
+					
 		}
-		return("<div class='explanation'>multiply Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"</div>");
+
 	}
 
 	this.findNextPivot = function(nStartRow,nStartCol){
@@ -468,7 +498,6 @@ inverse = function(aMatrix){
 			else{aNewMatrix[row][col]=newRow[col];}
 		}
 	}
-	//print_r($aNewMatrix); die("");
 	augmentedMatrix = new matrix(aNewMatrix,nSize);
 	writeOutputToElement("augemented_matrix",augmentedMatrix.displayEntries(),"step");
 	augmentedMatrix.doGaussJordan();
