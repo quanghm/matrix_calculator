@@ -526,9 +526,12 @@ inverse = function(aMatrix){
 		newRow=array_fill(nSize+1,nSize,0);
 		for (col=nSize+1;col<=2*nSize;col++)
 		{
-			if (col-row==nSize)
-			{aNewMatrix[row][col]=1;}
-			else{aNewMatrix[row][col]=newRow[col];}
+			if (col-row==nSize){
+				aNewMatrix[row][col]=1;
+			}
+			else{
+				aNewMatrix[row][col]=newRow[col];
+			}
 		}
 	}
 	augmentedMatrix = new matrix(aNewMatrix,nSize);
