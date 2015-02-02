@@ -95,6 +95,7 @@ function initSlider(){
 }
 
 //	Step control form
+//	previous button
 $("#previous").click(function(){
 	var currStep = $("div.stepshow");
 	if (currStep.attr("id")!="step1")
@@ -104,7 +105,7 @@ $("#previous").click(function(){
 	}
 });
 
-
+//	next button
 $("#next").click(function(){
 	var currStep = $("div.stepshow");
 	if (currStep.attr("id")!="computation_result")
@@ -112,6 +113,20 @@ $("#next").click(function(){
 		currStep.toggleClass("stepshow");
 		currStep.next().toggleClass("stepshow");
 	}
+});
+
+//	last button
+$("#last").click(function(){
+	var currStep=$("div.stepshow");
+	currStep.toggleClass("stepshow");
+	$("#computation_result").toggleClass("stepshow");
+});
+
+//	first button
+$("#first").click(function(){
+	var currStep=$("div.stepshow");
+	currStep.toggleClass("stepshow");
+	$("#step1").toggleClass("stepshow");	
 });
 
 $("#goBack").click(function(event){

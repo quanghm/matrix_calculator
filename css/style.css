@@ -28,11 +28,11 @@ div.hidden{
 #StepCtrl a{
 	width: 100px;
 	height:30px;
-	background-color: gray;
+	background-color: lightgray;
 	opacity: 0.8;
 	padding:5px;
 	margin:5px;
-	color:greenyellow;
+	color:green;
 }
 
 /* output div classes
@@ -53,4 +53,5 @@ div.explanation{
 	width:50%;
 	text-align:center;
 	margin: 0 auto;
+	font-family: sanserif;
 }

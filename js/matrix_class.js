@@ -266,6 +266,12 @@ function matrix(aRequests,nAugmented) {
 				return "Row Echelon Form:<br/>"+this.displayEntries();
 			}
 			
+			nStepCount++;
+			sNextStepID="step"+nStepCount;
+			sStepOutput="<div class='explanation'>Found new pivot at entry ("+aNewPivot[0]+","+aNewPivot[1]+")</div>";
+			sStepOutput+=this.displayEntries(aNewPivot[0]);
+			writeOutputToElement(sNextStepID,sStepOutput,"step");
+			
 			//	jump more than one row
 			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
 			{
@@ -336,6 +342,13 @@ function matrix(aRequests,nAugmented) {
 			if (aNewPivot==0){
 				return "Row Echelon Form:<br/>"+this.displayEntries();
 			}
+
+			//	found new pivot
+			nStepCount++;
+			sNextStepID="step"+nStepCount;
+			sStepOutput="<div class='explanation'>Found new pivot at entry ("+aNewPivot[0]+","+aNewPivot[1]+")</div>";
+			sStepOutput+=this.displayEntries(aNewPivot[0]);
+			writeOutputToElement(sNextStepID,sStepOutput,"step");
 			
 			//	jump more than one row
 			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
@@ -411,6 +424,26 @@ function matrix(aRequests,nAugmented) {
 			if (aNewPivot==0){
 				break;
 			}
+
+			//	find new pivot
+			nStepCount++;
+			sNextStepID="step"+nStepCount;
+			sStepOutput="<div class='explanation'>Found new pivot at entry ("+aNewPivot[0]+","+aNewPivot[1]+")</div>";
+			
+			switch ( nDet ){
+			case 1:
+				sDet="\\(\\det\\)";
+				break;
+			case -1:
+				sDet="\\(-\\det\\)";
+				break;
+			default:
+				sDet="\\("+float2rat(nDet)+"\\det\\)";
+			}
+			
+			sStepOutput+=sDet;
+			sStepOutput+=this.displayEntries(aNewPivot[0],true);
+			writeOutputToElement(sNextStepID,sStepOutput,"step");
 			
 			//	jump more than one row
 			if (aNewPivot[0]>aPivot[0]+parseFloat(1))
@@ -478,7 +511,7 @@ function matrix(aRequests,nAugmented) {
 				}
 			}
 		}
-		return float2rat(nDet);
+		return float2rat(nDet*this.entries[nRowCount][nColCount]);
 	}
 }
 inverse = function(aMatrix){
