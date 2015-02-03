@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="user-scalableyes, initial-scale=1, maximum-scale=3, minimum-scale=1, width=720, height=1280, target-densitydpi=440" />
+
+<title>Insert title here</title>
+
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="js/php.js"></script>
+<script type="text/javascript" src="js/matrix_class.js"></script>
+</head>
+<body>
+<div id="container">
+<div id="inputDiv">
+
+<form name="frmMatrix" id="frmMatrix" method="post" action="doCompute.html">
+<input type="number" name="num_rows" id="num_rows" class="entry" value="1"/>\(\times\)<input type="number" name="num_cols" id="num_cols" class="entry" value="1"/><br/>
+<input type="text" name="augmentedCols" id="augmentedCols" placeholder="augmented columns"/><br/>
+<button type="button" id="btnSetDim">Set dimension</button>
+<div id="matrix_entries">
+
+</div>
+<select name="operationType" id="operationType">
+<option value="Gauss">Gauss elimination</option>
+<option value="Gauss-Jordan">Gauss-Jordan elimination</option>
+<option value="findDet">Determinant</option>
+<option value="inverse">Inverse</option>
+</select>
+<button type="submit">Submit</button>
+</form>
+</div>
+<div id="computeDiv" class="hidden">
+	<div id="outputDiv" > 
+	<div id="slider"></div>
+	</div>
+<div id="StepCtrl">
+<a id="first"> |<< </a><a id="previous"> << </a>
+<a id="goBack">Back</button><a id="next">>></a><a id="last">>>|</a>
+</div>
+</div>
+
+</div>
+<script type="text/javascript" src="js/doCompute.js"></script>
+</body>
+</html>

@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+#container{
+	width:320px;
+}
 div{
 	margin:0 auto;
 }
