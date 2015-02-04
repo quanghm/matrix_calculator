@@ -48,7 +48,8 @@ div.menu{
 	border-color:white;
 	border-width:2px;
 	background-color:pink;
-	margin:5px;
+	margin-top:5px;
+	margin-bottom:5px;
 	line-height:40px;
 	text-align:center;
 	cursor:pointer;
