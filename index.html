@@ -60,6 +60,10 @@ function getInput(element){
 	$("#inputDiv").show();
 	$("#operation").val($(element).attr("id"));
 	$("#computeDiv").hide();
+	if ($(element).attr("id")=="findDet"||$(element).attr("id")=="inverse"){
+		$("#augmentedCols").val("0");
+		$("#augmentedCols").hide();
+	}
 	//doCompute(element);
 }
 function doCompute(){
