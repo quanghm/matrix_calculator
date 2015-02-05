@@ -34,7 +34,7 @@ $("#btnSetDim").click(function(event){
 				//pattern: '^[+-]?\\d*(.\\d*)?',
 				type: "text",
 				class: sEntryClass,
-				value: Math.floor(rand(-2,2))
+				value: Math.floor(Math.random()*3)
 			}).appendTo("#matrix_entries");
 		}
 		$("#matrix_entries").append("<br/>");
@@ -91,42 +91,42 @@ $("#frmMatrix").submit(function(event){
 })
 
 function initSlider(){
-	$("#step1").toggleClass("stepshow");
+	$("#step1").show();
 }
 
 //	Step control form
 //	previous button
 $("#previous").click(function(){
-	var currStep = $("div.stepshow");
+	var currStep = $("div.step:visible");
 	if (currStep.attr("id")!="step1")
 	{
-		currStep.toggleClass("stepshow");
-		currStep.prev	().toggleClass("stepshow");
+		currStep.hide();
+		currStep.prev().show();
 	}
 });
 
 //	next button
 $("#next").click(function(){
-	var currStep = $("div.stepshow");
+	var currStep = $("div.step:visible");
 	if (currStep.attr("id")!="computation_result")
 	{
-		currStep.toggleClass("stepshow");
-		currStep.next().toggleClass("stepshow");
+		currStep.animate({width:'toggle'},350);
+		currStep.next().animate({width:'toggle'},350);
 	}
 });
 
 //	last button
 $("#last").click(function(){
-	var currStep=$("div.stepshow");
-	currStep.toggleClass("stepshow");
-	$("#computation_result").toggleClass("stepshow");
+	var currStep=$("div.step:visible");
+	currStep.hide();
+	$("#computation_result").show();
 });
 
 //	first button
 $("#first").click(function(){
-	var currStep=$("div.stepshow");
-	currStep.toggleClass("stepshow");
-	$("#step1").toggleClass("stepshow");	
+	var currStep=$("div.step:visible");
+	currStep.hide();
+	$("#step1").show();
 });
 
 $("#goBack").click(function(event){

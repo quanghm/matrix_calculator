@@ -7,10 +7,11 @@
 <title>Insert title here</title>
 
 <link href="css/style.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script type="text/javascript" src="js/php.js"></script>
-<script type="text/javascript" src="js/matrix_class.js"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+<script type="text/javascript" src="./js/php.js"></script>
+<script type="text/javascript" src="./js/matrix_class.js"></script>
 </head>
 <body>
 <div id="containter">
@@ -26,7 +27,7 @@
 <!-- begin input form -->
 <div id="inputDiv" class="hidden">
 <form name="frmMatrix" id="frmMatrix" method="post" action="doCompute.html">
-<input type="text" name="num_rows" id="num_rows" class="entry" value="1"/>\(\times\)<input type="text" name="num_cols" id="num_cols" class="entry" value="1"/><br/>
+<input type="number" name="num_rows" id="num_rows" class="entry" value="1"/>\(\times\)<input type="number" name="num_cols" id="num_cols" class="entry" value="1"/><br/>
 <input type="text" name="augmentedCols" id="augmentedCols" placeholder="augmented columns"/><br/>
 <button type="button" id="btnSetDim">Set dimension</button>
 <input type="hidden" id="operation"/>
@@ -110,7 +111,7 @@ function doCompute(){
 		case "inverse":
 			writeOutputToElement("computation_result",inverse(objMatrix.entries),"step");
 	}
-	initSlider();
+	$("#step1").show();
 };
 </script>
 </body>
