@@ -1,24 +1,19 @@
 /**
  * 
  */
-$("#btnSetDim").click(function(event){
-//	event.preventDefault();
+function setDimension(){
 	$("#matrix_entries").empty();
 	num_rows=$("#num_rows").val();
 	num_cols=$("#num_cols").val();
-	augmented_cols =$("#augmentedCols").val();
-	$("<input/>",{
-		id: "augmented_Cols",
-		name: "augmented_Cols",
-		type: "hidden",
-		value: augmented_cols
-	}).appendTo("#matrix_entries");
+	augmented_cols =$("#augmented_cols").val();
+	$("<div/>",{
+		id:"matrix_entries"
+	}).appendTo("#inputDiv");
 
 	for (row=1;row<=num_rows;row++)
 	{
 		for (col=1;col<=num_cols;col++)
 		{
-			//sNewEntryName="e["+row+"]["+col+"]";
 			sNewEntryName='entries[]';
 			if (col>num_cols-augmented_cols)
 			{
@@ -34,12 +29,12 @@ $("#btnSetDim").click(function(event){
 				//pattern: '^[+-]?\\d*(.\\d*)?',
 				type: "text",
 				class: sEntryClass,
-				value: Math.floor(Math.random()*3)
+				value: Math.floor(Math.random()*4-2)
 			}).appendTo("#matrix_entries");
 		}
 		$("#matrix_entries").append("<br/>");
 	}
-})
+}
 
 //	when matrix is submitted
 $("#frmMatrix").submit(function(event){
@@ -73,7 +68,7 @@ $("#frmMatrix").submit(function(event){
 //	display the matrix in output div
 	writeOutputToElement("original_matrix",objMatrix.displayEntries());		
 	//	what operation
-	switch ($("#operationType").val())
+	switch ($("#operation").val())
 	{
 		case "Gauss":
 			writeOutputToElement("computation_result",objMatrix.doGauss(),"step");
@@ -110,8 +105,8 @@ $("#next").click(function(){
 	var currStep = $("div.step:visible");
 	if (currStep.attr("id")!="computation_result")
 	{
-		currStep.animate({width:'toggle'},350);
-		currStep.next().animate({width:'toggle'},350);
+		currStep.hide();//animate({width:'toggle'},350);
+		currStep.next().show();//animate({width:'toggle'},350);
 	}
 });
 

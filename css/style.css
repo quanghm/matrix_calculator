@@ -17,7 +17,7 @@ input.augmented{
 	background-color:#CBCBCB;
 	text-align:right;
 }
-div.hidden{
+.hidden{
 	display:none;
 	text-align: center;
 	align: center;
@@ -38,8 +38,18 @@ div.hidden{
 	color:green;
 }
 
-/*	New apperance
-*/
+/*	New apperance	*/
+	#menu_icon{
+		height:10px;	
+		width:100%;
+		display:block;
+		position:absolute;
+		top:0px;
+		left:0px;
+		cursor:pointer;
+		text-align:left;
+		z-index:100;
+	}
 
 div.menu{
 	width:100%;
@@ -53,10 +63,18 @@ div.menu{
 	line-height:40px;
 	text-align:center;
 	cursor:pointer;
+	z-index:100;
 }
 
-/* end new appearance
-*/
+#setDim{
+	width:30%;
+	height:30px;
+	line-height:30px;
+	margin-top:5px;
+	background-color:gray;
+	cursor:pointer;
+}
+/* end new appearance	*/
 
 
 /* output div classes
