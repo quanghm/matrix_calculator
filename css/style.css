@@ -28,7 +28,7 @@ input.augmented{
 	margin: 0 auto;
 }
 
-#StepCtrl a{
+a{
 	width: 100px;
 	height:30px;
 	background-color: lightgray;
@@ -39,17 +39,20 @@ input.augmented{
 }
 
 /*	New apperance	*/
-	#menu_icon{
-		height:10px;	
-		width:100%;
-		display:block;
-		position:absolute;
-		top:0px;
-		left:0px;
-		cursor:pointer;
-		text-align:left;
-		z-index:100;
-	}
+#main{
+	background-color:white;	
+}
+#menu_icon{
+	height:10px;	
+	width:75%;
+	display:block;
+	position:absolute;
+	top:0px;
+	left:0px;
+	cursor:pointer;
+	text-align:left;
+	z-index:100;
+}
 
 div.menu{
 	width:100%;

@@ -6,9 +6,6 @@ function setDimension(){
 	num_rows=$("#num_rows").val();
 	num_cols=$("#num_cols").val();
 	augmented_cols =$("#augmented_cols").val();
-	$("<div/>",{
-		id:"matrix_entries"
-	}).appendTo("#inputDiv");
 
 	for (row=1;row<=num_rows;row++)
 	{
@@ -34,6 +31,14 @@ function setDimension(){
 		}
 		$("#matrix_entries").append("<br/>");
 	}
+	$("<br/>",{}).appendTo("#matrix_entries");	
+	$("<a/>",{
+		onclick:"doCompute();",
+		html: "Compute"
+	}).appendTo("#matrix_entries");
+	
+	$("#dimensionForm").hide();
+	$("#matrix_entries").show();
 }
 
 //	when matrix is submitted
@@ -82,7 +87,8 @@ $("#frmMatrix").submit(function(event){
 		case "inverse":
 			writeOutputToElement("computation_result",inverse(objMatrix.entries),"step");
 	}
-	initSlider();
+	//initSlider();
+	$("#step1").show();
 })
 
 function initSlider(){
@@ -128,5 +134,7 @@ $("#goBack").click(function(event){
 	event.preventDefault();
 	$("#slider").empty();
 	$("#inputDiv").show();
+	$("#dimensionForm").show();
+	$("#matrix_entries").hide();
 	$("#computeDiv").hide();
 })
