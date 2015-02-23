@@ -47,7 +47,7 @@
 			<div id="slider"></div>
 		</div>
 		<div id="StepCtrl">
-			<a id="first"> First </a><a id="previous">Prev</a>
+			<a id="first">First</a><a id="previous">Prev</a>
 			<a id="goBack">Back</a><a id="next">Next</a><a id="last">Last</a>
 		</div>
 	</div>
@@ -58,7 +58,9 @@
 function getInput(element){
 	$("#main").toggle("show");
 	$("#operation_title").html($(element).html());
-	$("#inputDiv").hide();
+	$("#inputDiv").show();
+	$("#dimensionForm").show();
+	$("#matrix_entries").hide();
 
 	var sOptName=$(element).attr("id");
 	
@@ -99,6 +101,7 @@ function getInput(element){
 function doCompute(){
 //	hide input and show output
 	$("#inputDiv").hide();
+	$("#slider").empty();
 	$("#computeDiv").show();
 	
 	//	read the matrix from input 
