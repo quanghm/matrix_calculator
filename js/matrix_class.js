@@ -1,7 +1,7 @@
 /**
  * 
 **/
-float2rat = function(n, mathlook,tolerance) 
+function float2rat(n, mathlook,tolerance) 
 {
 	var aux=0;
 	var h1=0;
@@ -144,7 +144,7 @@ function matrix(aRequests,nAugmented) {
 			if (nMultiplier==-1){
 				return "<div class='explanation'>Change sign of Row "+nMultiplier+"</div>";
 			}
-			if (Number.isInteger(1/nMultiplier)){
+			if (Math.round(1/nMultiplier)==1/nMultiplier){
 				return "<div class='explanation'> Divide Row "+nRow+" by \\("+float2rat(1/nMultiplier)+"\\)</div>"
 			}
 			return "<div class='explanation'>Multiply Row "+nRow+" by \\("+float2rat(nMultiplier)+"\\)</div>";
@@ -189,7 +189,7 @@ function matrix(aRequests,nAugmented) {
 				return("<div class='explanation'>Add Row "+nRowToBeMultiplied+" to Row "+nRowToBeModified+"</div>");
 			}
 			if (nMultiplier<0){
-				if (Number.isInteger(1/nMultiplier)){
+				if ((1/nMultiplier)==Math.round(1/nMultiplier)){
 					return ("<div class='explanation'>Divide Row "+nRowToBeMultiplied+" by \\("+float2rat(-1/nMultiplier)+"\\) and substract from Row "+nRowToBeModified+"</div>");
 				}
 				else {
@@ -197,7 +197,7 @@ function matrix(aRequests,nAugmented) {
 				}
 			}
 			else{
-				if (Number.isInteger(1/nMultiplier)){
+				if ((1/nMultiplier)==Math.round(1/nMultiplier)){
 					return ("<div class='explanation'>Divide Row "+nRowToBeMultiplied+" by \\("+float2rat(nMultiplier)+"\\) and add to Row "+nRowToBeModified+"</div>");
 				}
 				else{
