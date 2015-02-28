@@ -17,6 +17,13 @@ input.augmented{
 	background-color:#CBCBCB;
 	text-align:right;
 }
+input.dimension{
+	width:50px;
+	text-align:right;
+}
+input.dimension:focus{
+	background-color:yellow;
+}
 .hidden{
 	display:none;
 	text-align: center;
@@ -35,23 +42,39 @@ a{
 	opacity: 0.8;
 	padding:5px;
 	margin:5px;
+ 	margin-top:5px; 
 	color:green;
 }
 
 /*	New apperance	*/
 #main{
 	background-color:white;	
+	width:100vw;
+	height:90vh;
 }
 #menu_icon{
-	height:10px;	
-	width:75%;
+	height:50px;
+	line-height:50px;
+	width:50px;
 	display:block;
 	position:absolute;
 	top:0px;
 	left:0px;
 	cursor:pointer;
-	text-align:left;
+	text-align:center;
+/* 	background-image:url(../images/menu_icon.png); */
+	background-color:pink;
 	z-index:100;
+}
+#banner{
+	height:25px;
+	line-height:25px;
+	margin-left:20px;
+	margin-right:20px;
+	width:100%;
+	display:block;
+	text-align:center;
+	z-index:1;
 }
 
 div.menu{
@@ -70,32 +93,53 @@ div.menu{
 }
 
 #setDim{
-	width:30%;
-	height:30px;
-	line-height:30px;
-	margin-top:5px;
-	background-color:gray;
-	cursor:pointer;
+ 	width:30%; 
+ 	height:30px; 
+}
+
+#operation_title{
+	margin:0 auto;
+	text-align:center;
+	height:50px;
+	line-height:50px;
 }
 /* end new appearance	*/
 
+/******************************/
+/*	begin slider settings */
+/******************************/
 
-/* output div classes
-*/
+/*	output Div	*/
+#outputDiv{
+	position: relative;
+	overflow: hidden;
+}
+
+/*	Slider 	*/
+#slider{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	height: 400px;
+}
 
 /* 	div element for each step classes */
-/* 	default: no display */
-/* 	toggle: show */
-	.step{
-		display:none; 
-	}
-	.stepshow{
-		display:block;
-	}
+.step{
+	width:100vmin;
+	display:block;
+	float:left;
+	margin: 0;
+	padding: 0; 
+}
 
 /* div element for explanation	 */
 div.explanation{
 	text-align:center;
 	margin: 0 auto;
+	display:block;
 	font-family: sanserif;
 }
+
+/****************************/
+/*	end slider settings		*/
+/****************************/
