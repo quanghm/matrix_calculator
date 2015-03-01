@@ -19,6 +19,7 @@ input.augmented{
 }
 input.dimension{
 	width:50px;
+	margin-bottom:10px;
 	text-align:right;
 }
 input.dimension:focus{
@@ -31,7 +32,7 @@ input.dimension:focus{
 }
 
 #StepCtrl{
-	padding:15px;
+	padding:10px;
 	margin: 0 auto;
 }
 
@@ -100,8 +101,12 @@ div.menu{
 #operation_title{
 	margin:0 auto;
 	text-align:center;
-	height:50px;
-	line-height:50px;
+/* 	height:50px; */
+/* 	line-height:50px; */
+}
+
+#inputDiv{
+	text-align:center;
 }
 /* end new appearance	*/
 

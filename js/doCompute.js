@@ -165,41 +165,27 @@ function slideFirst(){
 //	previous button
 $("#previous").click(function(){
 	slideRight();
-//	var currStep = $("div.step:visible");
-//	if (currStep.attr("id")!="step1")
-//	{
-//		currStep.toggle("slide");
-//		currStep.prev().toggle({direction:"left",easing:"linear"});
-//	}
 });
 
 //	next button
 $("#next").click(function(){
 	slideLeft();
-//	var currStep = $("div.step:visible");
-//	if (currStep.attr("id")!="computation_result")
-//	{
-//		currStep.toggle({easing:"linear"});
-//		currStep.next().toggle({easing:"linear"});
-//	}
 });
 
 //	last button
 $("#last").click(function(){
 	slideLast();
-//	var currStep=$("div.step:visible");
-//	currStep.toggle({easing:"linear"});
-//	$("#computation_result").toggle({easing:"linear"});
 });
 
 //	first button
 $("#first").click(function(){
 	slideFirst();
-//	var currStep=$("div.step:visible");
-//	currStep.toggle({easing:"linear"});
-//	$("#step1").toggle({easing:"linear"});
 });
 
+$("#outputDiv").swipe({
+	swipeLeft:function(){slideLeft()},
+	swipeRight:function(){slideRight()}
+})
 $("#goBack").click(function(event){
 	event.preventDefault();
 	$("#slider").empty();
