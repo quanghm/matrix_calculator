@@ -1,6 +1,6 @@
 @CHARSET "UTF-8";
 #container{
-	width:320px;
+	width:98vw;
 }
 div{
 	margin:0 auto;
@@ -131,6 +131,7 @@ div.menu{
 /* 	div element for each step classes */
 .step{
 	width:100vmin;
+	height:200px;
 	display:block;
 	float:left;
 	margin: 0;
