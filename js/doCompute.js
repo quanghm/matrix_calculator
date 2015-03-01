@@ -1,5 +1,5 @@
 /**
- * 
+ * doCompute.js
  */
 	var slideCount = 0;
 	var slideWidth = 0;
@@ -57,6 +57,7 @@ function setDimension(){
 	$("<br/>",{}).appendTo("#matrix_entries");	
 	$("<a/>",{
 		onclick:"doCompute();",
+		class:"ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini",
 		html: "Compute"
 	}).appendTo("#matrix_entries");
 	
@@ -194,3 +195,5 @@ $("#goBack").click(function(event){
 	$("#matrix_entries").hide();
 	$("#computeDiv").hide();
 });
+
+/*	end doCompute.js */

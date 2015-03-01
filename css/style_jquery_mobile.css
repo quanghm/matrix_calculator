@@ -1,0 +1,92 @@
+@CHARSET "UTF-8";
+div{
+	margin:0 auto;
+}
+#container{
+	width:98vw;
+}
+
+input.entry{
+	width: 24px;
+	text-align:right;
+}
+input.entry:focus{
+	background-color:yellow;
+}
+input.augmented{
+	width: 24px;
+	background-color:#80ffff;
+	text-align:right;
+}
+input.dimension{
+	width:50px;
+	margin-bottom:10px;
+	text-align:right;
+}
+input.dimension:focus{
+	background-color:yellow;
+}
+.hidden{
+	display:none;
+	text-align: center;
+	align: center;
+}
+
+/*	New apperance	*/
+
+#operation_title{
+	margin:0 auto;
+	text-align:center;
+/* 	height:50px; */
+/* 	line-height:50px; */
+}
+
+#inputDiv{
+	text-align:center;
+}
+/* end new appearance	*/
+
+/******************************/
+/*	begin slider settings */
+/******************************/
+
+/*	output Div	*/
+#outputDiv{
+	position: relative;
+	overflow: hidden;
+}
+
+/*	Slider 	*/
+#slider{
+	position: relative;
+	margin: 0 auto;
+	padding: 0;
+	height: 400px;
+}
+
+/* 	div element for each step classes */
+.step{
+	width:100vmin;
+	height:200px;
+	display:block;
+	float:left;
+	margin: 0 auto;
+	padding: 0; 
+}
+
+/*	div step Control	*/
+#stepCtrl{
+	margin:0 auto;
+	text-align:center;
+}
+/* div element for explanation	 */
+div.explanation{
+	text-align:center;
+	margin: 0 auto;
+	display:block;
+	font-family: sanserif;
+}
+
+/****************************/
+/*	end slider settings		*/
+/****************************/
