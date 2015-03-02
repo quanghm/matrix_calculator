@@ -84,7 +84,7 @@ function matrix(aRequests,nAugmented) {
 		//	setting up output string
 		sOutput = "";
 		
-		if (inline)	{	sOutput+="\\(";	}	else{sOutput+= "\\[";}
+		if (inline)	{	sOutput+="\\(";	}	else{sOutput+= "\\(\\displaystyle";}
 		sOutput+="\\left(\\begin{array}{";
 		for (nCol=1;nCol<=nColCount;nCol++)
 		{
@@ -114,7 +114,7 @@ function matrix(aRequests,nAugmented) {
 			sOutput+=sRowToDisplay;
 		}
 		sOutput+="\\end{array}\\right)";
-		if (inline) {sOutput+="\\)";}else{sOutput+="\\]";}
+		sOutput+="\\)";
 		return sOutput;
 	}
 	
@@ -347,7 +347,9 @@ function matrix(aRequests,nAugmented) {
 			nStepCount++;
 			sNextStepID="step"+nStepCount;
 			sStepOutput="<div class='explanation'>Found new pivot at entry ("+aNewPivot[0]+","+aNewPivot[1]+")</div>";
+			sStepOutput+="<div class='matrixEntries'>";
 			sStepOutput+=this.displayEntries(aNewPivot[0]);
+			sStepOutput+="</div>";
 			writeOutputToElement(sNextStepID,sStepOutput,"step");
 			
 			//	jump more than one row
@@ -356,7 +358,9 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;
 				sNextStepID = "step"+nStepCount;
 				sStepOutput=this.interchangeRows(aNewPivot[0], aPivot[0]+1);
+				sStepOutput+="<div class='matrixEntries'>";
 				sStepOutput+=this.displayEntries(aPivot[0]+1);
+				sStepOutput+="</div>";
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -373,7 +377,9 @@ function matrix(aRequests,nAugmented) {
 				nStepCount++;
 				sNextStepID = "step"+nStepCount;
 				sStepOutput=this.multiplyRow(aPivot[0], nMultiplier);
+				sStepOutput+="<div class='matrixEntries'>";
 				sStepOutput+=this.displayEntries(aPivot[0]);
+				sStepOutput+="</div>";
 				writeOutputToElement(sNextStepID,sStepOutput,"step");
 			}
 			
@@ -386,7 +392,9 @@ function matrix(aRequests,nAugmented) {
 					nStepCount++;
 					sNextStepID = "step"+nStepCount;
 					sStepOutput=this.addMultipleOfRow(row, aPivot[0], nMultiplier);
+					sStepOutput+="<div class='matrixEntries'>";
 					sStepOutput+=this.displayEntries(aPivot[0]);
+					sStepOutput+="</div>";
 					writeOutputToElement(sNextStepID,sStepOutput,"step");
 				}
 			}
@@ -558,4 +566,9 @@ function writeOutputToElement(sElementID,sStringToAdd,sClass)
 		class: sClass
 	}).appendTo($("#slider"));
 	MathJax.Hub.Queue(["Typeset",MathJax.Hub,sElementID]);
+//	var math = $(sElementID).find("div.matrixEntries:first-child").find("span.MathJax:first-child");
+//	var w = math.width();  
+//	alert(w);
+//    $(sElementID).css("font-size", Math.floor(360/w * 100)+"%");
+//    MathJax.Hub.Queue(["Rerender",MathJax.Hub,sElementID]); 
 }
