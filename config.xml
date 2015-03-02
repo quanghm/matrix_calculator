@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "basicmath.skku.edu"
+        version     = "1.1.1" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Matrix Calculator</name>
+
+    <description>
+        A simple matrix calculator for beginners
+    </description>
+	
+    <author href="http://basicmath.skku.edu" email="qhoang@skku.edu">
+        Quang Hoang
+    </author>
+    
+	<preference name="fullscreen" value="true" />
+	
+	<icon src="icon.png" />
+	
+	<!-- feature list -->
+	<feature name="http://api.phonegap.com/1.0/network" />
+
+</widget>
