@@ -29,7 +29,6 @@ function setDimension(){
 		return;
 		}
 
-	
 	for (row=1;row<=num_rows;row++)
 	{
 		for (col=1;col<=num_cols;col++)
@@ -49,71 +48,16 @@ function setDimension(){
 				//pattern: '^[+-]?\\d*(.\\d*)?',
 				type: "text",
 				class: sEntryClass,
-				value: Math.floor(Math.random()*4-2)
+				value: (($("#rdmEntries").val()==1)?Math.floor(Math.random()*4-2):0)
 			}).appendTo("#matrix_entries");
 		}
 		$("#matrix_entries").append("<br/>");
 	}
-	$("<br/>",{}).appendTo("#matrix_entries");	
-	$("<a/>",{
-		onclick:"doCompute();",
-		class:"ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini",
-		html: "Compute"
-	}).appendTo("#matrix_entries");
+	
 	
 	$("#dimensionForm").hide();
-	$("#matrix_entries").show();
+	$("#matrix_entries_container").show();
 }
-
-//	when matrix is submitted
-$("#frmMatrix").submit(function(event){
-	//	do not submit form
-	event.preventDefault();
-	
-	//	hide input and show output
-	$("#inputDiv").hide();
-	$("#computeDiv").show();
-	
-	//	read the matrix from input 
-	num_rows=$("#num_rows").val();
-	num_cols=$("#num_cols").val();
-	augmented_cols =$("#augmentedCols").val();	
-	
-
-	var aMatrix = [];
-	var aInputMatrix = $("input[name='entries\\[\\]']");
-	
-	for (row=1;row<=num_rows;row++)
-	{
-		aMatrix[row]=[];	
-		for (col=1;col<=num_cols;col++)
-		{
-			aMatrix[row][col]=aInputMatrix.eq((row-1)*num_cols+(col-1)).val();
-		}
-	}	
-	
-	//	new matrix object
-	objMatrix = new matrix(aMatrix,augmented_cols);
-//	display the matrix in output div
-//	writeOutputToElement("original_matrix",objMatrix.displayEntries());		
-	//	what operation
-	switch ($("#operation").val())
-	{
-		case "Gauss":
-			writeOutputToElement("computation_result",objMatrix.doGauss(),"step");
-			break;
-		case "Gauss-Jordan":
-			writeOutputToElement("computation_result",objMatrix.doGaussJordan(),"step");
-			break;
-		case "findDet":
-			writeOutputToElement("computation_result",objMatrix.findDet(),"step");
-			break;
-		case "inverse":
-			writeOutputToElement("computation_result",inverse(objMatrix.entries),"step");
-	}
-	//initSlider();
-	$("#step1").show();
-})
 
 function initSlider(){
 	//	Get slider info
@@ -187,13 +131,20 @@ $("#outputDiv").swipe({
 	swipeLeft:function(){slideLeft()},
 	swipeRight:function(){slideRight()}
 })
-$("#goBack").click(function(event){
+$("#startOver").click(function(event){
 	event.preventDefault();
 	$("#slider").empty();
 	$("#inputDiv").show();
+	document.getElementById("dimensionForm").reset();
 	$("#dimensionForm").show();
-	$("#matrix_entries").hide();
+	$("#matrix_entries_container").hide();
 	$("#computeDiv").hide();
+});
+$("#modifyEntries").click(function(envent){
+	event.preventDefault();
+	$("#inputDiv").show();
+	$("#matrix_entries_container").show();
+	$("#computeDiv").hide();	
 });
 
 /*	end doCompute.js */

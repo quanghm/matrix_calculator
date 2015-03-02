@@ -2,10 +2,6 @@
 div{
 	margin:0 auto;
 }
-#container{
-	width:98vw;
-}
-
 input.entry{
 	width: 24px;
 	text-align:right;
@@ -37,10 +33,12 @@ input.dimension:focus{
 #operation_title{
 	margin:0 auto;
 	text-align:center;
-/* 	height:50px; */
-/* 	line-height:50px; */
 }
-
+#computeDiv{
+	width:100vw;
+	margin-left:-1em;
+	text-align: center;
+}
 #inputDiv{
 	text-align:center;
 }
@@ -78,6 +76,7 @@ input.dimension:focus{
 #stepCtrl{
 	margin:0 auto;
 	text-align:center;
+	padding:1em;
 }
 /* div element for explanation	 */
 div.explanation{
