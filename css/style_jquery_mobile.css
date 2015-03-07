@@ -65,7 +65,7 @@ input.dimension:focus{
 /* 	div element for each step classes */
 .step{
 	width:100vmin;
-/* 	height:50vmin; */
+	height:100vmin;
 	display:inline-block;
 	float:left;
 	margin: 0 auto;
