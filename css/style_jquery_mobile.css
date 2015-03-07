@@ -3,20 +3,20 @@ div{
 	margin:0 auto;
 }
 input.entry{
-	width: 24px;
+	width: 2em;
 	text-align:right;
 }
 input.entry:focus{
 	background-color:yellow;
 }
 input.augmented{
-	width: 24px;
+	width: 2em;
 	background-color:#80ffff;
 	text-align:right;
 }
 input.dimension{
-	width:50px;
-	margin-bottom:10px;
+	width:10em;
+	margin-bottom:1em;
 	text-align:right;
 }
 input.dimension:focus{
@@ -51,7 +51,7 @@ input.dimension:focus{
 /*	output Div	*/
 #outputDiv{
 	position: relative;
-	overflow: hidden;
+	overflow-x: hidden;
 }
 
 /*	Slider 	*/
@@ -59,13 +59,13 @@ input.dimension:focus{
 	position: relative;
 	margin: 0 auto;
 	padding: 0;
-	height: 400px;
+/* 	height: 400px; */
 }
 
 /* 	div element for each step classes */
 .step{
 	width:100vmin;
-	height:200px;
+/* 	height:50vmin; */
 	display:inline-block;
 	float:left;
 	margin: 0 auto;
