@@ -559,7 +559,7 @@ inverse = function(aMatrix){
 function writeOutputToElement(sElementID,sStringToAdd,sClass)
 {
 	if (sClass==undefined){sClass="";}
-	$("<div/>",{
+	$("<li/>",{
 		id: sElementID,
 		name: sElementID,
 		html: sStringToAdd,

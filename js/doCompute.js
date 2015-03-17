@@ -146,5 +146,15 @@ $("#modifyEntries").click(function(envent){
 	$("#matrix_entries_container").show();
 	$("#computeDiv").hide();	
 });
+$(document).keyup(function(event){
+	switch (event.which){
+		case 37:
+			bxSlider.goToPrevSlide();
+			break;
+		case 39:
+			bxSlider.goToNextSlide();
+			break;
+	}
+});
 
 /*	end doCompute.js */
