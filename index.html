@@ -8,7 +8,6 @@
 
 <title>Insert title here</title>
 
-<link href="./css/style_jquery_mobile.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet"
 	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <link rel="stylesheet"
@@ -29,6 +28,8 @@
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
 <!-- end bxslider -->
+<link href="./css/style_jquery_mobile.css" rel="stylesheet" type="text/css" />
+
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
   messageStyle: "none"
@@ -133,7 +134,7 @@ MathJax.Hub.Config({
 				<!-- end input form -->
 				<div id="computeDiv" class="hidden">
 					<div id="outputDiv">
-						<ul id="slider" class="bxslider"></ul>
+						<div id="slider" class="bxslider"></div>
 					</div>
 				</div>
 				<div data-role="footer" data-position="fixed" class="text-align:center;">
@@ -218,8 +219,9 @@ MathJax.Hub.Config({
 			}
 			var bxSlider = $("#slider").bxSlider({
 				infiniteLoop : false,
-				adaptiveHeight : true,
-				pager : false
+				pager : false,
+				mode: 'vertical',
+				minSlides:2
 			});
 			function doCompute() {
 				//	hide input and show output

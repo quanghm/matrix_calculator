@@ -15,8 +15,8 @@ input.augmented{
 	text-align:right;
 }
 input.dimension{
-	width:10em;
-	margin-bottom:1em;
+/* 	width:10em; */
+/* 	margin-bottom:1em; */
 	text-align:right;
 }
 input.dimension:focus{
@@ -71,6 +71,11 @@ input.dimension:focus{
 	float:left;
 	margin: 0 auto;
 	padding: 0; 
+}
+.bx-wrapper .bx-viewport{
+	background-color:transparent;
+	border-color:transparent;
+	margin:2vm;
 }
 
 /*	div step Control	*/

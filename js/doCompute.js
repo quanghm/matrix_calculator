@@ -156,5 +156,26 @@ $(document).keyup(function(event){
 			break;
 	}
 });
+$(window).on("orientationchange",function(event){
+	alert(event.orientation)
+	switch (event.orientation){
+		case "landscape":
+			bxSlider.reloadSlider({
+				infiniteLoop : false,
+				pager : false,
+				mode: 'horizontal',
+				minSlides:1
+			});
+			break;
+		case "portrait":
+			bxSlider.reloadSlider({
+				infiniteLoop : false,
+				pager : false,
+				mode: 'vertical',
+				minSlides:2
+			});
+			break;
+	}
+})
 
 /*	end doCompute.js */
