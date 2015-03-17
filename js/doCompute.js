@@ -157,7 +157,6 @@ $(document).keyup(function(event){
 	}
 });
 $(window).on("orientationchange",function(event){
-	alert(event.orientation)
 	switch (event.orientation){
 		case "landscape":
 			bxSlider.reloadSlider({
