@@ -18,13 +18,14 @@ function setDimension(){
 		$("#augmented_cols").val("0");
 	}
 	
-	num_rows=$("#num_rows").val();
-	num_cols=$("#num_cols").val();
-	augmented_cols =$("#augmented_cols").val();
+	var num_rows=$("#num_rows").val();
+	var num_cols=$("#num_cols").val();
+	var augmented_cols =$("#augmented_cols").val();
 
 	//	validate entries
 	if ((num_rows<=0) ||(num_cols<=0)|| (augmented_cols<0)||(augmented_cols>num_cols))
 		{
+		console.log(augmented_cols+","+num_cols);
 		alert("Invalid dimensions. Please review your input.");
 		return;
 		}
@@ -94,16 +95,12 @@ function slideRight(){
 	}
 }
 function slideLast(){
-	$("#slider").animate({
-		left:-sliderUIWidth+slideWidth
-	})
-	currentSlide=slideCount;
+	var slideCount=bxSlider.getSlideCount();
+	console.log(slideCount);
+	bxSlider.goToSlide(slideCount-1);
 }
 function slideFirst(){
-	$("#slider").animate({
-		left:0
-	})
-	currentSlide=1;
+	bxSlider.goToSlide(0);
 }
 
 //	Step control form
@@ -127,10 +124,7 @@ $("#first").click(function(){
 	slideFirst();
 });
 
-$("#outputDiv").swipe({
-	swipeLeft:function(){slideLeft()},
-	swipeRight:function(){slideRight()}
-})
+
 $("#startOver").click(function(event){
 	event.preventDefault();
 	$("#slider").empty();
@@ -157,6 +151,9 @@ $(document).keyup(function(event){
 	}
 });
 $(window).on("orientationchange",function(event){
+	$("#slider").children().each(function(){
+		scaleMath(this);
+	});
 	switch (event.orientation){
 		case "landscape":
 			bxSlider.reloadSlider({
@@ -171,7 +168,7 @@ $(window).on("orientationchange",function(event){
 				infiniteLoop : false,
 				pager : false,
 				mode: 'vertical',
-				minSlides:2
+				minSlides:1
 			});
 			break;
 	}
