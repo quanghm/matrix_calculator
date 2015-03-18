@@ -22,8 +22,8 @@ function setDimension(){
 	var num_cols=$("#num_cols").val();
 	var augmented_cols =$("#augmented_cols").val();
 
-	//	validate entries
-	if ((num_rows<=0) ||(num_cols<=0)|| (augmented_cols<0)||(augmented_cols>num_cols))
+	// validate entries
+	if ((num_rows<=0)||(num_cols<=0)||(augmented_cols<0)||(num_cols*1<augmented_cols*1))
 		{
 		console.log(augmented_cols+","+num_cols);
 		alert("Invalid dimensions. Please review your input.");
@@ -159,7 +159,7 @@ $(window).on("orientationchange",function(event){
 			bxSlider.reloadSlider({
 				infiniteLoop : false,
 				pager : false,
-				mode: 'horizontal',
+				mode: 'vertical',
 				minSlides:1
 			});
 			break;
@@ -167,7 +167,7 @@ $(window).on("orientationchange",function(event){
 			bxSlider.reloadSlider({
 				infiniteLoop : false,
 				pager : false,
-				mode: 'vertical',
+				mode: 'horizontal',
 				minSlides:1
 			});
 			break;
