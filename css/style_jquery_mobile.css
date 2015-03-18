@@ -59,7 +59,7 @@ input.dimension:focus{
 	position: relative;
 	margin: 0 auto;
 	padding: 0;
-/* 	height: 400px; */
+	min-height: 50vmin;
 }
 
 /* 	div element for each step classes */
@@ -79,13 +79,16 @@ input.dimension:focus{
 }
 
 /*	div step Control	*/
-#stepCtrl{
-	margin:0 auto;
+#StepCtrl{
+	position:fixed;
+	bottom:0;
+	width:100%;
+	margin:0 auto;	
 	text-align:center;
-	padding:1em;
 }
 /* div element for explanation	 */
 div.explanation{
+	line-height:10vmin;
 	text-align:center;
 	margin: 0 auto;
 	display:block;
