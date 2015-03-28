@@ -13,8 +13,8 @@
 <link rel="stylesheet"
 	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-<!-- <script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script> -->
+<script
+	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script src="js/jquery.touchSwipe.min.js"></script>
 
 <script type="text/javascript"
@@ -22,13 +22,15 @@
 
 <script type="text/javascript" src="./js/php.js"></script>
 <script type="text/javascript" src="./js/matrix_class.js"></script>
+
 <!-- bxslider -->
 <!-- bxSlider Javascript file -->
 <script src="./js/jquery.bxslider.min.js"></script>
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
 <!-- end bxslider -->
-<link href="./css/style_jquery_mobile.css" rel="stylesheet" type="text/css" />
+<link href="./css/style_jquery_mobile.css" rel="stylesheet"
+	type="text/css" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -41,19 +43,22 @@ MathJax.Hub.Config({
 		<!-- begin main menu -->
 		<div id="main" data-role="panel" data-display="reveal">
 			<ul data-role="listview">
-				<li><a id="Gauss" onclick="getInput(this);">Gauss elimination</a></li>
+				<li><a id="Gauss" onclick="getInput(this);">Gauss
+						elimination</a></li>
 				<li><a id="Gauss-Jordan" onclick="getInput(this);">Gauss-Jordan
 						elimination</a></li>
 				<li><a id="findDet" onclick="getInput(this);">Determinant</a></li>
 				<li><a id="inverse" onclick="getInput(this);">Inverse</a></li>
-				<li><a id="refresh" class="ui-icon-refresh" onclick="getInput(this);">Refresh</a></li>
+				<li><a id="transpose" onclick="getInput(this);">Transpose</a></li>
+				<li><a id="refresh" class="ui-icon-refresh"
+					onclick="getInput(this);">Refresh</a></li>
 			</ul>
 		</div>
 		<!-- end main menu -->
 
 		<!-- begin head banner -->
 		<div id="banner" data-role="header">
-			<h1 role="heading" class="ui-title">Matrix Calculator</h1>
+			<h1 role="heading" id="operation_title" class="ui-title">Gauss Elimination</h1>
 			<a href="#main"
 				class="jqm-navmenu-link ui-nodisc-icon ui-alt-icon ui-btn-left ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all"
 				data-role="button" role="button">Menu</a>
@@ -64,8 +69,6 @@ MathJax.Hub.Config({
 		<div role="main" class="ui-content">
 
 			<div id="containter">
-				<h2 id="operation_title">Gauss Elimination</h2>
-				<hr />
 				<!-- begin input form -->
 				<div id="inputDiv">
 					<form id="dimensionForm">
@@ -104,13 +107,25 @@ MathJax.Hub.Config({
 								</select>
 							</div>
 						</div>
-						<a class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini"
+						<a
+							class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini"
 							id="setDim" onclick="setDimension()">Set Dimensions</a> <input
 							type="hidden" id="operation" value="Gauss" />
 					</form>
 					<div id="matrix_entries_container" class="hidden">
 						<div id="matrix_entries"></div>
 						<div class="ui-grid-a">
+							<div class="ui-block-a">
+								<label for='detailedSolution'
+									style="height: 60px; line-height: 60px;"> View detailed
+									solution </label>
+							</div>
+							<div class="ui-block-b">
+								<select id="detailedSolution" data-role="flipswitch">
+									<option value="0">Off</option>
+									<option value="1" selected>On</option>
+								</select>
+							</div>
 							<div class="ui-block-a">
 								<button id="modifyDim"
 									class="ui-btn ui-icon-carat-l ui-btn-icon-left ui-shadow ui-corner-all">Back</button>
@@ -134,28 +149,36 @@ MathJax.Hub.Config({
 				<!-- end input form -->
 				<div id="computeDiv" class="hidden">
 					<div id="outputDiv">
-						<div id="slider-container"><div id="slider"></div></div>
+						<div id="slider-container">
+							<div id="slider"></div>
+						</div>
 					</div>
 					<div id="StepCtrl">
-							<div class="ui-grid-a" style="padding-left: 1em; padding-right: 1em;">
-								<div class="ui-block-a">
-									<a class="ui-btn ui-shadow ui-corner-all" id="first">First</a>
-								</div>
-								<div class="ui-block-b">
-									<a class="ui-btn ui-shadow ui-corner-all" id="last">Last</a>
-								</div>
-								<div class="ui-block-a">
-									<button
-										class="ui-btn ui-shadow ui-corner-all ui-icon-carat-l ui-btn-icon-left"
-										id="modifyEntries">Modify</button>
-								</div>
-								<div class="ui-block-b">
-									<button
-										class="ui-btn ui-shadow ui-corner-all ui-icon-refresh ui-btn-icon-right"
-										id="startOver">Start Over</button>
-								</div>
+						<div>
+							<a id="toggleSlider" class="ui-btn ui-shadow ui-corner-all">Toggle
+								slide view</a>
+						</div>
+						<div class="ui-grid-a">
+							<div class="ui-block-a">
+								<a class="ui-btn ui-shadow ui-corner-all" data-mini='false'
+									id="first">First</a>
+							</div>
+							<div class="ui-block-b">
+								<a class="ui-btn ui-shadow ui-corner-all" id="last">Last</a>
+							</div>
+							<div class="ui-block-a">
+								<button
+									class="ui-btn ui-shadow ui-corner-all ui-icon-carat-l ui-btn-icon-left"
+									id="modifyEntries">Modify</button>
+							</div>
+							<div class="ui-block-b">
+								<button
+									class="ui-btn ui-shadow ui-corner-all ui-icon-refresh ui-btn-icon-right"
+									id="startOver">Start Over</button>
 							</div>
 						</div>
+					</div>
+
 				</div>
 				<!-- 				<div data-role="footer" data-position="fixed" class="text-align:center;"> -->
 
@@ -163,116 +186,6 @@ MathJax.Hub.Config({
 			</div>
 
 			<script type="text/javascript" src="./js/doCompute.js"></script>
-			<script type="text/javascript">
-				function getInput(element) {
-					$("#main").panel("close");
-					$("#operation_title").html($(element).html());
-					$("#inputDiv").show();
-					$("#dimensionForm").show();
-					$("#matrix_entries_container").hide();
-
-					var sOptName = $(element).attr("id");
-
-					switch (sOptName) {
-						case "Gauss" :
-							$("#times").show();
-							$("#num_cols").show();
-							$("#augmented_cols").val("");
-							$("#augmented_cols_container").show();
-							break;
-						case "Gauss-Jordan" :
-							$("#times").show();
-							$("#num_cols").show();
-							$("#augmented_cols").val("");
-							$("#augmented_cols_container").show();
-							break;
-						case "findDet" :
-							$("#times").hide();
-							$("#num_cols").hide();
-							$("#num_cols").val($("#num_rows").val());
-							$("#augmented_cols").val("0");
-							$("#augmented_cols_container").hide();
-							break;
-						case "inverse" :
-							$("#times").hide();
-							$("#num_cols").hide();
-							$("#num_cols").val($("#num_rows").val());
-							$("#augmented_cols").val("0");
-							$("#augmented_cols_container").hide();
-							break;
-						case "refresh" :
-							location.reload();
-							break;
-						break;
-				}
-
-				$("#inputDiv").show();
-				$("#operation").val(sOptName);
-				$("#computeDiv").hide();
-			}
-			var bxSlider = $("#slider").bxSlider(
-					{
-						infiniteLoop : false,
-						pager : false,
-						mode : (window.innerHeight < window.innerWidth)
-								? 'vertical'
-								: 'horizontal',
-						minSlides : 1
-					});
-			function doCompute() {
-				//	hide input and show output
-				$("#inputDiv").hide();
-				$("#slider").empty();
-				$("#computeDiv").show();
-
-				//	read the matrix from input 
-				num_rows = $("#num_rows").val();
-				num_cols = $("#num_cols").val();
-				augmented_cols = $("#augmented_cols").val();
-
-				var aMatrix = [];
-				var aInputMatrix = $("input[name='entries\\[\\]']");
-
-				for (row = 1; row <= num_rows; row++) {
-					aMatrix[row] = [];
-					for (col = 1; col <= num_cols; col++) {
-						aMatrix[row][col] = aInputMatrix.eq(
-								(row - 1) * num_cols + (col - 1)).val();
-					}
-				}
-
-				//	new matrix object
-				objMatrix = new matrix(aMatrix, augmented_cols);
-
-				//	display the matrix in output div
-				//writeOutputToElement("original_matrix",objMatrix.displayEntries());		
-
-				//what operation	
-				switch ($("#operation").val()) {
-					case "Gauss" :
-						writeOutputToElement("computation_result",
-								"Row echelon form", objMatrix.doGauss(), "step");
-						break;
-					case "Gauss-Jordan" :
-						writeOutputToElement("computation_result",
-								"Reduced row echelon form", objMatrix
-										.doGaussJordan(), "step");
-						break;
-					case "findDet" :
-						writeOutputToElement("computation_result",
-								"Determinant", objMatrix.findDet(), "step");
-						break;
-					case "inverse" :
-						writeOutputToElement("computation_result",
-								"Inverse Matrix", inverse(objMatrix.entries),
-								"step");
-				}
-				bxSlider.reloadSlider();
-				//initSlider();
-				//$("#step1").show();
-			};
-			</script>
-
 		</div>
 		<!-- end main content -->
 

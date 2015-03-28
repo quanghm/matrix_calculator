@@ -59,7 +59,9 @@ function float2rat(n, mathlook, tolerance) {
 }
 
 // The matrix object
-function matrix(aRequests, nAugmented) {
+var matrix = function(aRequests, nAugmented) {
+	// chaining puposese
+	var oThis=this;
 	// dimension of matrix
 	// matrix dimensions
 	this.rowCount = aRequests.length - 1;
@@ -79,30 +81,45 @@ function matrix(aRequests, nAugmented) {
 		return (this.rowCount == this.colCount);
 	}
 
+	this.transpose = function() {
+		var aTranspose = [];
+		var nRowCount = this.rowCount;
+		var nColCount = this.colCount;
+		for (var row = 1; row <= nColCount; row++) {
+			aTranspose[row]=[];
+			for (var col = 1; col <= nRowCount; col++) {
+				aTranspose[row][col] = this.entries[col][row];
+			}
+		}
+		writeOutputToElement('original_matrix',"Original Matrix",this.displayEntries(),"step");
+		return matrix(aTranspose);
+	}
+
 	/*
-	 * turn a matrix to an html-mathjax string pivotRow=0: row to be highlighted
-	 * inline=false: if display formula inline mathlook=true: use fraction or
-	 * "/" for rational
+	 * turn a matrix to an html-mathjax string 
+	 * pivotRow=0: row to be highlighted
+	 * inline=false: if display formula inline
+	 * mathlook=true: use fraction or "/" for rational
 	 */
 	this.displayEntries = function(pivotRow, inline, mathlook) {
 		// set up variables
-		if (pivotRow == undefined) {
+		if (pivotRow === undefined) {
 			pivotRow = 0;
 		}
-		if (inline == undefined) {
+		if (inline === undefined) {
 			inline = false;
 		}
-		if (mathlook == undefined) {
+		if (mathlook === undefined) {
 			mathlook = true;
 		}
 
 		// get dimensions of matrix
 		var nRowCount = this.rowCount;
 		var nColCount = this.colCount;
-		augmentedCols = this.augementedCols;
+		var augmentedCols = this.augementedCols;
 
 		// setting up output string
-		sOutput = "";
+		var sOutput = "";
 
 		if (inline) {
 			sOutput += "\\(";
@@ -112,7 +129,7 @@ function matrix(aRequests, nAugmented) {
 		sOutput += "\\left(\\begin{array}{";
 		for (nCol = 1; nCol <= nColCount; nCol++) {
 			sOutput += "r";
-			if ((augmentedCols > 0) && (nCol + augmentedCols == nColCount)) {
+			if ((augmentedCols > 0) && (nCol + augmentedCols === nColCount)) {
 				sOutput += "|";
 			}
 		}
@@ -163,7 +180,8 @@ function matrix(aRequests, nAugmented) {
 				return " Divide Row " + nRow + " by \\("
 						+ float2rat(1 / nMultiplier) + "\\)"
 			}
-			return "Multiply Row " + nRow + " by \\("+float2rat(nMultiplier) + "\\)";
+			return "Multiply Row " + nRow + " by \\(" + float2rat(nMultiplier)
+					+ "\\)";
 		}
 	}
 
@@ -386,7 +404,8 @@ function matrix(aRequests, nAugmented) {
 				nMultiplier = 1 / parseFloat(nMultiplier);
 				nStepCount++;
 				sNextStepID = "step" + nStepCount;
-				writeOutputToElement(sNextStepID, this.multiplyRow(aPivot[0], nMultiplier),this.displayEntries(aPivot[0]), "step");
+				writeOutputToElement(sNextStepID, this.multiplyRow(aPivot[0],
+						nMultiplier), this.displayEntries(aPivot[0]), "step");
 			}
 
 			// kill entries in pivot columns
@@ -395,8 +414,9 @@ function matrix(aRequests, nAugmented) {
 					nMultiplier = -this.entries[row][aPivot[1]];
 					nStepCount++;
 					sNextStepID = "step" + nStepCount;
-					writeOutputToElement(sNextStepID, this.addMultipleOfRow(row, aPivot[0],
-							nMultiplier),this.displayEntries(aPivot[0]), "step");
+					writeOutputToElement(sNextStepID, this.addMultipleOfRow(
+							row, aPivot[0], nMultiplier), this
+							.displayEntries(aPivot[0]), "step");
 				}
 			}
 		}
@@ -452,8 +472,9 @@ function matrix(aRequests, nAugmented) {
 
 			sStepOutput += sDet;
 			sStepOutput += this.displayEntries(aNewPivot[0], true);
-			writeOutputToElement(sNextStepID,"Found new pivot at entry (" + aNewPivot[0] + ","
-					+ aNewPivot[1] + ")" ,sStepOutput, "step");
+			writeOutputToElement(sNextStepID, "Found new pivot at entry ("
+					+ aNewPivot[0] + "," + aNewPivot[1] + ")", sStepOutput,
+					"step");
 
 			// jump more than one row
 			if (aNewPivot[0] > aPivot[0] + parseFloat(1)) {
@@ -471,9 +492,9 @@ function matrix(aRequests, nAugmented) {
 					default :
 						sDet = "\\(" + float2rat(nDet) + "\\det\\)";
 				}
-				sStepOutput += (sDet + this
-						.displayEntries(aPivot[0], true));
-				writeOutputToElement(sNextStepID, this.interchangeRows(aNewPivot[0], aPivot[0] + 1),sStepOutput, "step");
+				sStepOutput += (sDet + this.displayEntries(aPivot[0], true));
+				writeOutputToElement(sNextStepID, this.interchangeRows(
+						aNewPivot[0], aPivot[0] + 1), sStepOutput, "step");
 			}
 
 			// new pivot
@@ -502,9 +523,9 @@ function matrix(aRequests, nAugmented) {
 					default :
 						sDet = "\\(" + float2rat(nDet) + "\\det\\)";
 				}
-				sStepOutput += (sDet + this
-						.displayEntries(aPivot[0], true));
-				writeOutputToElement(sNextStepID, this.multiplyRow(aPivot[0], nMultiplier),sStepOutput, "step");
+				sStepOutput += (sDet + this.displayEntries(aPivot[0], true));
+				writeOutputToElement(sNextStepID, this.multiplyRow(aPivot[0],
+						nMultiplier), sStepOutput, "step");
 			}
 
 			// kill entries in pivot columns
@@ -518,24 +539,26 @@ function matrix(aRequests, nAugmented) {
 					sStepOutput = "";
 					sStepOutput += ("<div class='matrixEntries'>" + sDet + this
 							.displayEntries(aPivot[0], true));
-					writeOutputToElement(sNextStepID,this.addMultipleOfRow(row, aPivot[0],
-							nMultiplier), sStepOutput, "step");
+					writeOutputToElement(sNextStepID, this.addMultipleOfRow(
+							row, aPivot[0], nMultiplier), sStepOutput, "step");
 				}
 			}
 		}
 		return float2rat(nDet * this.entries[nRowCount][nColCount]);
 	}
+	return oThis;
 }
 inverse = function(aMatrix) {
-	augmentedMatrix = new matrix(aMatrix);
+	var newRow=[];
+	var augmentedMatrix = new matrix(aMatrix);
 	if (augmentedMatrix.isSquare() == false) {
 		return "Matrix is not square";
 	}
-	aNewMatrix = augmentedMatrix.entries;
-	nSize = augmentedMatrix.rowCount;
-	for (row = 1; row <= nSize; row++) {
+	var aNewMatrix = augmentedMatrix.entries;
+	var nSize = augmentedMatrix.rowCount;
+	for (var row = 1; row <= nSize; row++) {
 		newRow = array_fill(nSize + 1, nSize, 0);
-		for (col = nSize + 1; col <= 2 * nSize; col++) {
+		for (var col = nSize + 1; col <= 2 * nSize; col++) {
 			if (col - row == nSize) {
 				aNewMatrix[row][col] = 1;
 			} else {
@@ -544,8 +567,9 @@ inverse = function(aMatrix) {
 		}
 	}
 	augmentedMatrix = new matrix(aNewMatrix, nSize);
-	writeOutputToElement("augemented_matrix", "Augment original matrix by the identity matrix", augmentedMatrix.displayEntries(),
-			"step");
+	writeOutputToElement("augemented_matrix",
+			"Augment original matrix by the identity matrix", augmentedMatrix
+					.displayEntries(), "step");
 	augmentedMatrix.doGaussJordan();
 	if (float2rat(augmentedMatrix.entries[nSize][nSize]) == 1) {
 		return "invertible";
@@ -583,12 +607,13 @@ function writeOutputToElement(sElementID, sExplanation, sStringToAdd, sClass) {
 		class : "explanation"
 	}).appendTo(newDiv);
 
-	var matrixDiv=$("<div/>", {
+	var matrixDiv = $("<div/>", {
 		id : sElementID + "-matrix",
 		name : sElementID + "-matrix",
 		html : sStringToAdd,
 		class : "matrixEntries"
 	}).appendTo(newDiv);
+	$("<hr/>").appendTo(newDiv);
 
 	MathJax.Hub.Queue(["Typeset", MathJax.Hub, sElementID]);
 	// MathJax.Hub.Typeset(sElementID);

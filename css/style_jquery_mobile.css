@@ -1,46 +1,56 @@
 @CHARSET "UTF-8";
-div{
-	margin:0 auto;
+
+div {
+	margin: 0 auto;
 }
-input.entry{
+
+input.entry {
 	width: 2em;
-	text-align:right;
+	text-align: right;
 }
-input.entry:focus{
-	background-color:yellow;
+
+input.entry:focus {
+	background-color: yellow;
 }
-input.augmented{
+
+input.augmented {
 	width: 2em;
-	background-color:#80ffff;
-	text-align:right;
+	background-color: #80ffff;
+	text-align: right;
 }
-input.dimension{
-/* 	width:10em; */
-/* 	margin-bottom:1em; */
-	text-align:right;
+
+input.dimension {
+	/* 	width:10em; */
+	/* 	margin-bottom:1em; */
+	text-align: right;
 }
-input.dimension:focus{
-	background-color:yellow;
+
+input.dimension:focus {
+	background-color: yellow;
 }
-.hidden{
-	display:none;
+
+.hidden {
+	display: none;
 	text-align: center;
 	align: center;
 }
 
 /*	New apperance	*/
-
-#operation_title{
-	margin:0 auto;
-	text-align:center;
-}
-#computeDiv{
-	width:100vw;
-	margin-left:-1em;
+#operation_title {
+	margin: 0 auto;
 	text-align: center;
 }
-#inputDiv{
-	text-align:center;
+
+#computeDiv {
+	width: 100vw;
+	height: 60vh;
+	overflow-y:scroll;
+	margin-left: -1em;
+	text-align: center;
+}
+
+#inputDiv {
+	text-align: center;
 }
 /* end new appearance	*/
 
@@ -49,49 +59,62 @@ input.dimension:focus{
 /******************************/
 
 /*	output Div	*/
-#outputDiv{
+#outputDiv {
 	position: relative;
 	overflow-x: hidden;
+	text-align: center;
 }
 
 /*	Slider 	*/
-#slider{
+#slider {
 	position: relative;
 	margin: 0 auto;
 	padding: 0;
 	min-height: 50vmin;
+	max-height: 60vmin;
+	text-align: center;
 }
 
 /* 	div element for each step classes */
-.step{
-/* 	width:100vmin; */
-/* 	height:60vmin; */
-	max-height:80vh;
-	display:inline-block;
-	float:left;
+.step {
+	width: 100%;
+	height:100%;
+	display: block;
+	max-height: 80vh;
+	float: left;
 	margin: 0 auto;
-	padding: 0; 
-}
-.bx-wrapper .bx-viewport{
-	background-color:transparent;
-	border-color:transparent;
-	margin:2vm;
+	padding: 0;
+	border-top:1px;
+	border-bottom:1px;
 }
 
-/*	div step Control	*/
-#StepCtrl{
-	position:fixed;
-	bottom:0;
-	width:100%;
-	margin:0 auto;	
-	text-align:center;
+.bx-wrapper .bx-viewport {
+	background-color: transparent;
+	border-color: transparent;
+	margin: 2vm;
+}
+
+/* 	div step Control	 */
+#StepCtrl {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	margin: 0 auto;
+	left:0;
+	text-align: center;
+	background-color: #e9e9e9;
+}
+
+label {
+	line-height: 60px;
+	height: 60px;
 }
 /* div element for explanation	 */
-div.explanation{
-	line-height:10vmin;
-	text-align:center;
+div.explanation {
+	line-height: 10vmin;
+	text-align: center;
 	margin: 0 auto;
-	display:block;
+	display: block;
 	font-family: sanserif;
 }
 
