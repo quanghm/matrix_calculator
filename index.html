@@ -8,17 +8,13 @@
 
 <title>Insert title here</title>
 
-<link rel="stylesheet"
-	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-<link rel="stylesheet"
-	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script
-	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <script src="js/jquery.touchSwipe.min.js"></script>
 
-<script type="text/javascript"
-	src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <script type="text/javascript" src="./js/php.js"></script>
 <script type="text/javascript" src="./js/matrix_class.js"></script>
@@ -29,8 +25,7 @@
 <!-- bxSlider CSS file -->
 <link href="./css/jquery.bxslider.css" rel="stylesheet" />
 <!-- end bxslider -->
-<link href="./css/style_jquery_mobile.css" rel="stylesheet"
-	type="text/css" />
+<link href="./css/style_jquery_mobile.css" rel="stylesheet" type="text/css" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -43,15 +38,12 @@ MathJax.Hub.Config({
 		<!-- begin main menu -->
 		<div id="main" data-role="panel" data-display="reveal">
 			<ul data-role="listview">
-				<li><a id="Gauss" onclick="getInput(this);">Gauss
-						elimination</a></li>
-				<li><a id="Gauss-Jordan" onclick="getInput(this);">Gauss-Jordan
-						elimination</a></li>
+				<li><a id="Gauss" onclick="getInput(this);">Gauss elimination</a></li>
+				<li><a id="Gauss-Jordan" onclick="getInput(this);">Gauss-Jordan elimination</a></li>
 				<li><a id="findDet" onclick="getInput(this);">Determinant</a></li>
 				<li><a id="inverse" onclick="getInput(this);">Inverse</a></li>
 				<li><a id="transpose" onclick="getInput(this);">Transpose</a></li>
-				<li><a id="refresh" class="ui-icon-refresh"
-					onclick="getInput(this);">Refresh</a></li>
+				<li><a id="refresh" class="ui-icon-refresh" onclick="getInput(this);">Refresh</a></li>
 			</ul>
 		</div>
 		<!-- end main menu -->
@@ -74,76 +66,64 @@ MathJax.Hub.Config({
 					<form id="dimensionForm">
 						<div class="ui-grid-solo" id="num_rows_container">
 							<div class="ui-block-a" style="height: 60px; line-height: 60px;">
-								<input type="number" class="dimension" max="10" id="num_rows"
-									placeholder="Rows" />
+								<input type="number" class="dimension" max="10" id="num_rows" placeholder="Rows" />
 							</div>
 						</div>
 						<span id="times">\(\times\)</span>
 						<div class="ui-grid-solo" id="num_cols_container">
 							<div class="ui-block-a" style="height: 60px; line-height: 60px;">
-								<input type="number" class="dimension" id="num_cols" max="10"
-									placeholder="Columns" />
+								<input type="number" class="dimension" id="num_cols" max="10" placeholder="Columns" />
 							</div>
 						</div>
 						<div class="ui-grid-a" id="augmented_cols_container">
-							<div class="ui-block-a"
-								style="text-align: left; height: 60px; line-height: 60px;">
+							<div class="ui-block-a" style="text-align: left; height: 60px; line-height: 60px;">
 								<label for="augmented_cols">Augmented Columns</label>
 							</div>
 							<div class="ui-block-b" style="height: 60px; line-height: 60px;">
-								<input type="number" class="dimension" id="augmented_cols"
-									placeholder="Augmented Cols" />
+								<input type="number" class="dimension" id="augmented_cols" placeholder="Augmented Cols" />
 							</div>
 						</div>
 						<div class="ui-grid-a" id="rdmEntries_container">
-							<div class="ui-block-a"
-								style="text-align: left; height: 60px; line-height: 60px;">
+							<div class="ui-block-a" style="text-align: left; height: 60px; line-height: 60px;">
 								<label for="rdmEntries">Random entries:</label>
 							</div>
 							<div class="ui-block-b" style="height: 60px; line-height: 60px;">
 								<select id="rdmEntries" data-role="flipswitch">
-									<option value="0">Off</option>
-									<option value="1" selected>On</option>
+									<option value="0" selected>Off</option>
+									<option value="1">On</option>
 								</select>
 							</div>
 						</div>
-						<a
-							class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini"
-							id="setDim" onclick="setDimension()">Set Dimensions</a> <input
-							type="hidden" id="operation" value="Gauss" />
+						<a class="ui-btn ui-shadow ui-corner-all ui-btn-inline ui-btn-mini" id="setDim" onclick="setDimension()">Set
+							Dimensions</a> <input type="hidden" id="operation" value="Gauss" />
 					</form>
 					<div id="matrix_entries_container" class="hidden">
 						<div id="matrix_entries"></div>
 						<div class="ui-grid-a">
 							<div class="ui-block-a">
-								<label for='detailedSolution'
-									style="height: 60px; line-height: 60px;"> View detailed
-									solution </label>
+								<label for='detailedSolution' style="height: 60px; line-height: 60px;"> View detailed solution </label>
 							</div>
 							<div class="ui-block-b">
 								<select id="detailedSolution" data-role="flipswitch">
-									<option value="0">Off</option>
-									<option value="1" selected>On</option>
+									<option value="0" selected>Off</option>
+									<option value="1">On</option>
 								</select>
 							</div>
 							<div class="ui-block-a">
-								<button id="modifyDim"
-									class="ui-btn ui-icon-carat-l ui-btn-icon-left ui-shadow ui-corner-all">Back</button>
+								<button id="modifyDim" class="ui-btn ui-icon-carat-l ui-btn-icon-left ui-shadow ui-corner-all">Back</button>
 							</div>
 							<div class="ui-block-b">
-								<button
-									class="ui-btn ui-icon-carat-r ui-btn-icon-right ui-shadow ui-corner-all"
-									onclick="doCompute();">Compute</button>
+								<button class="ui-btn ui-icon-carat-r ui-btn-icon-right ui-shadow ui-corner-all" onclick="doCompute();">Compute</button>
 							</div>
 						</div>
 						<script type="text/javascript">
-							$("#modifyDim").click(function(event) {
-								event.preventDefault();
-								$("#dimensionForm").show();
-								$("#matrix_entries_container").hide();
-								$("#computeDiv").hide();
-							});
-						</script>
+			    $("#modifyDim").click(function(event) {
+				event.preventDefault();
+				$("#dimensionForm").show();
+				$("#matrix_entries_container").hide();
+				$("#computeDiv").hide();
+			    });
+			</script>
 					</div>
 				</div>
 				<!-- end input form -->
@@ -154,27 +134,38 @@ MathJax.Hub.Config({
 						</div>
 					</div>
 					<div id="StepCtrl">
-						<div>
-							<a id="toggleSlider" class="ui-btn ui-shadow ui-corner-all">Toggle
-								slide view</a>
-						</div>
 						<div class="ui-grid-a">
 							<div class="ui-block-a">
-								<a class="ui-btn ui-shadow ui-corner-all" data-mini='false'
-									id="first">First</a>
+								<div class="ui-grid-a">
+									<div class="ui-block-a">
+										<button data-mini="true" id="first">First</button>
+									</div>
+									<div class="ui-block-b">
+										<button data-mini="true" id="prev">Prev</button>
+									</div>
+								</div>
 							</div>
 							<div class="ui-block-b">
-								<a class="ui-btn ui-shadow ui-corner-all" id="last">Last</a>
+								<div class="ui-grid-a">
+									<div class="ui-block-a">
+										<button data-mini="true" id="next">Next</button>
+									</div>
+									<div class="ui-block-b">
+										<button data-mini="true" id="last">Last</button>
+									</div>
+								</div>
 							</div>
+						</div>
+						<div class="ui-grid-b">
 							<div class="ui-block-a">
-								<button
-									class="ui-btn ui-shadow ui-corner-all ui-icon-carat-l ui-btn-icon-left"
-									id="modifyEntries">Modify</button>
+								<button class=" ui-icon-carat-l ui-btn-icon-left" data-mini="true" id="modifyEntries">Modify</button>
 							</div>
 							<div class="ui-block-b">
-								<button
-									class="ui-btn ui-shadow ui-corner-all ui-icon-refresh ui-btn-icon-right"
-									id="startOver">Start Over</button>
+								<button id="toggleSlider" data-mini="true">Toggle slider</button>
+							</div>
+							<div class="ui-block-c">
+								<button class="ui-icon-refresh ui-btn-icon-right" data-mini="true" id="startOver">Start
+									Over</button>
 							</div>
 						</div>
 					</div>

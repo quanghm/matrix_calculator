@@ -5,7 +5,7 @@ div {
 }
 
 input.entry {
-	width: 2em;
+	width: 1.5em;
 	text-align: right;
 }
 
@@ -14,7 +14,7 @@ input.entry:focus {
 }
 
 input.augmented {
-	width: 2em;
+	width: 1.5em;
 	background-color: #80ffff;
 	text-align: right;
 }
@@ -43,7 +43,7 @@ input.dimension:focus {
 
 #computeDiv {
 	width: 100vw;
-	height: 60vh;
+	height: 75vh;
 	overflow-y:scroll;
 	margin-left: -1em;
 	text-align: center;
@@ -53,6 +53,39 @@ input.dimension:focus {
 	text-align: center;
 }
 /* end new appearance	*/
+
+/* begin matrix table class */
+.tbl-matrix{
+	margin: 0 auto;
+	cell-padding: 1px;
+}
+.td-matrix{
+	text-align:right;
+	border:solid 1px;
+	min-width:1em;
+	min-height:1em;
+}
+/* end matrix table class */
+
+/* fraction display */
+span.frac {
+  display: inline-block;
+  font-size: 70%;
+  text-align: center;
+}
+span.frac > sup {
+  display: block;
+  border-bottom: 1px solid;
+  font: inherit;
+}
+span.frac > span {
+  display: none;
+}
+span.frac > sub {
+  display: block;
+  font: inherit;
+}
+/* end fraction display */
 
 /******************************/
 /*	begin slider settings */

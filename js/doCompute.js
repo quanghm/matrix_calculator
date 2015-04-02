@@ -54,6 +54,7 @@ var mySlider = $("#slider").bxSlider({
 infiniteLoop : false,
 //adaptiveHeight : true,
 pager : false,
+controls:false,
 // mode : (window.innerHeight < window.innerWidth) ? 'vertical'
 // : 'horizontal',
 minSlides : 1
@@ -90,11 +91,11 @@ var objMatrix = new matrix(aMatrix, augmented_cols);
 switch ($("#operation").val()) {
 case "Gauss":
 	writeOutputToElement("computation_result", "Row echelon form", objMatrix
-			.doGauss(), "step");
+			.ref(), "step");
 	break;
 case "Gauss-Jordan":
 	writeOutputToElement("computation_result", "Reduced row echelon form",
-			objMatrix.doGaussJordan(), "step");
+			objMatrix.rref(), "step");
 	break;
 case "findDet":
 	writeOutputToElement("computation_result", "Determinant", objMatrix
@@ -102,11 +103,11 @@ case "findDet":
 	break;
 case "inverse":
 	writeOutputToElement("computation_result", "Inverse Matrix",
-			inverse(objMatrix.entries), "step");
+			objMatrix.inverse(), "step");
 	break;
 case "transpose":
 	writeOutputToElement("computation_result", "Transpose Matrix", objMatrix
-			.transpose().displayEntries(), "step");
+			.transpose().print(), "step");
 	break;
 }
 mySlider.reloadSlider();
@@ -117,11 +118,6 @@ initSlider();
 /**
  * doCompute.js
  */
-var slideCount = 0;
-var slideWidth = 0;
-var slideHeight = 0;
-var sliderUIWidth = 0;
-var currentSlide = 1;
 
 function setDimension() {
 
@@ -181,27 +177,10 @@ if ($("#detailedSolution").val() === "0") {
 }
 }
 // form control
-function slideLeft() {
-if (currentSlide < slideCount) {
-	$("#slider").animate({
-		left : "-=" + slideWidth
-	})
-	currentSlide++;
-}
 
-}
-
-function slideRight() {
-if (currentSlide > 1) {
-	$("#slider").animate({
-		left : "+=" + slideWidth
-	})
-	currentSlide--;
-}
-}
 function slideLast() {
 var slideCount = mySlider.getSlideCount();
-console.log(slideCount);
+//console.log(slideCount);
 mySlider.goToSlide(slideCount - 1);
 }
 function slideFirst() {
@@ -210,23 +189,25 @@ mySlider.goToSlide(0);
 
 // Step control form
 // previous button
-$("#previous").click(function() {
-slideRight();
+$("#prev").click(function() {
+    mySlider.goToPrevSlide();
 });
 
 // next button
 $("#next").click(function() {
-slideLeft();
+    mySlider.goToNextSlide();
 });
 
 // last button
 $("#last").click(function() {
 slideLast();
+$("#computeDiv").animate({scrollTop:$("#computeDiv")[0].scrollHeight});
 });
 
 // first button
 $("#first").click(function() {
 slideFirst();
+$("#computeDiv").animate({scrollTop:0});
 });
 
 $("#startOver").click(function(event) {
@@ -247,13 +228,14 @@ $("#computeDiv").hide();
 $(document).keyup(function(event) {
 switch (event.which) {
 case 37:
-	bxSlider.goToPrevSlide();
+	mySlider.goToPrevSlide();
 	break;
 case 39:
-	bxSlider.goToNextSlide();
+	mySlider.goToNextSlide();
 	break;
 }
 });
+
 $(window).on("orientationchange", function(event) {
 $("#slider").children().each(function() {
 	scaleMath(this);
@@ -263,29 +245,31 @@ case "landscape":
 	mySlider.reloadSlider({
 		infiniteLoop : false,
 		pager : false,
-		mode : 'horizontal',
-		minSlides : 1
+		controls:false,
 	});
 	break;
 case "portrait":
 	mySlider.reloadSlider({
 		infiniteLoop : false,
 		pager : false,
-		mode : 'horizontal',
-		minSlides : 1
+		controls:false,
 	});
 	break;
 }
 })
 
 $("#toggleSlider").tap(function() {
-if ($("#detailedSolution").val() === "0") {// change to view detail
+if ($("#detailedSolution").val() === "0") {// no slider
 	$("#detailedSolution").val("1");
 	mySlider.destroySlider();
+	$("#outputDiv").css("padding",$("#stepCtrl").height());
 } else {
 	$("#detailedSolution").val("0");
 	mySlider.reloadSlider();
+	$("#outputDiv").css("padding","inherit");
 }
+
+$("#detailedSolution").flipswitch("refresh");
 })
 /* end doCompute.js */
 
