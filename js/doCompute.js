@@ -170,10 +170,15 @@ $("#matrix_entries_container").show();
 }
 
 function initSlider() {
-if ($("#detailedSolution").val() === "0") {
+if ($("#detailedSolution").val() === "0") {// slider view
 	mySlider.reloadSlider();
+	$("#prev").removeAttr("disabled");
+	$("#next").removeAttr("disabled");
 } else {
 	mySlider.destroySlider();
+	$("#prev").attr("disabled","disabled");
+	$("#next").attr("disabled","disabled");
+	
 }
 }
 // form control
@@ -262,11 +267,16 @@ $("#toggleSlider").tap(function() {
 if ($("#detailedSolution").val() === "0") {// no slider
 	$("#detailedSolution").val("1");
 	mySlider.destroySlider();
-	$("#outputDiv").css("padding",$("#stepCtrl").height());
+	$("#prev").attr("disabled","disabled");
+	$("#next").attr("disabled","disabled");
+
+	//$("#outputDiv").css("padding",$("#stepCtrl").height());
 } else {
 	$("#detailedSolution").val("0");
 	mySlider.reloadSlider();
 	$("#outputDiv").css("padding","inherit");
+	$("#prev").removeAttr("disabled");
+	$("#next").removeAttr("disabled");
 }
 
 $("#detailedSolution").flipswitch("refresh");
