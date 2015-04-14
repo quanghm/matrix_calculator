@@ -119,7 +119,7 @@ function doCompute() {
 				objMatrix.transpose().printOutput(), "step");
 		break;
 	case "char":
-		writeOutputToElement("computation_result","Characteristic Polynomial",objMatrix.char().toString({mathlook:MathJax}));
+		writeOutputToElement("computation_result","Characteristic Polynomial",objMatrix.char().toString({mathlook:"MathJax"}));
 		break;
 	}
 	

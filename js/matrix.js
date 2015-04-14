@@ -429,7 +429,7 @@ matrix.prototype.add = function(oMatrix) {
 	for (var i = 0; i < this.rowCount(); i++) {
 		aResult.push([]);
 		for (var j = 0; j < this.colCount(); j++) {
-			aResult[i][j] = this.entries[i][j]*1 + oMatrix.entries[i][j]*1;
+			aResult[i][j] = this.entries[i][j] * 1 + oMatrix.entries[i][j] * 1;
 		}
 	}
 	return new matrix(aResult);
@@ -585,8 +585,7 @@ matrix.prototype.printOutput = function(oConfig) {
 		for (var nRow = 0; nRow < nRowCount; nRow++) {
 			sRowToDisplay = "";
 			for (var nCol = 0; nCol < nColCount; nCol++) {
-				sEntryToDisplay = float2rat(this.entries[nRow][nCol],
-						oConfig.mathlook);
+				sEntryToDisplay = float2rat(this.entries[nRow][nCol], oConfig);
 				if ((oConfig.pivot !== 0) && (nRow == oConfig.pivot[0])) {
 					if (nCol == oConfig.pivot[1]) {
 						sEntryToDisplay = "\\mathbf{" + sEntryToDisplay + "}";
@@ -621,7 +620,7 @@ matrix.prototype.printOutput = function(oConfig) {
 			sOutput += "<tr class='tr-matrix'>";
 			for (var nCol = 0; nCol < nColCount; nCol++) {
 				sOutput += ("<td class='td-matrix'>"
-						+ float2rat(this.entries[nRow][nCol], oConfig.mathlook) + "</td>");
+						+ float2rat(this.entries[nRow][nCol], oConfig) + "</td>");
 			}
 			sOutput += "</tr>";
 		}
@@ -665,7 +664,7 @@ matrix.prototype.cramer = function() {
 	writeOutputToElement(
 			"coefDet",
 			"Determinant of coefficient matrix <a href=\"detail.html\" data-rel=\"dialog\" class=\"ui-btn ui-corner-all ui-btn-inline ui-icon-info ui-btn-icon-notext\">Delete</a>",
-			"\\("+float2rat(coefDet)+"\\)", "step");
+			"\\(" + float2rat(coefDet) + "\\)", "step");
 
 	if (coefDet === 0) {
 		writeOutputToElement("Solution", "Cramer's rule doesn't work",
@@ -679,7 +678,7 @@ matrix.prototype.cramer = function() {
 	var aSolution = [];
 
 	for (var tempCol = 0; tempCol < num_rows; tempCol++) {
-		//console.log(tempCol);
+		// console.log(tempCol);
 		tempMatrix = [];
 
 		for (var row = 0; row < num_rows; row++) {
@@ -698,8 +697,8 @@ matrix.prototype.cramer = function() {
 			mode : "det"
 		});
 		writeOutputToElement("A" + (1 + tempCol),
-				"Determinant of matrix \\(A_{" + (1 + tempCol) + "}\\)",
-				"\\("+float2rat(tempDet)+"\\)", "step");
+				"Determinant of matrix \\(A_{" + (1 + tempCol) + "}\\)", "\\("
+						+ float2rat(tempDet) + "\\)", "step");
 		writeOutputToElement("component-" + (1 + tempCol), "Component "
 				+ (1 + tempCol) + " of solution vector",
 				"\\(\\displaystyle\\frac{\\det A_" + (1 + tempCol)
@@ -708,7 +707,7 @@ matrix.prototype.cramer = function() {
 		aSolution.push([ tempDet / coefDet ]);
 	}
 	var objSolution = new matrix(aSolution);
-	//console.log(objSolution)
+	// console.log(objSolution)
 	writeOutputToElement("solution-vector", "Solution to system:", objSolution
 			.printOutput(), "step");
 }
@@ -730,22 +729,24 @@ matrix.prototype.char = function() {
 			mode : "det",
 			detailed : false
 		});
-		console.log(this.add(matrix.diag(aTemp)).entries);
+		// console.log(this.add(matrix.diag(aTemp)).entries);
 		aPolyValues.push([ x, det ]);
 	}
-	console.log(aPolyValues);
+	// console.log(aPolyValues);
 	return interpolate(aPolyValues);
 }
 
 /* supplement functions */
-function float2rat(n, mathlook, tolerance) {
-	var aux = 0,h1 = 0,h2 = 0,k1 = 0,k2 = 0,b = 0,a = 0,sign = "";
-	if (tolerance === undefined) {
-		tolerance = 0.00001;
-	}
-	if (mathlook === undefined) {
-		mathlook = "display";
-	}
+function float2rat(n, oConfig) {
+	if (typeof oConfig === "undefined")
+		oConfig = {};
+	var tolerance = (oConfig.hasOwnProperty("tolerance")) ? oConfig.tolerance
+			: (0.00001);
+	var mathlook = (oConfig.hasOwnProperty("mathlook")) ? oConfig.mathlook
+			: "display";
+	var mode = (oConfig.hasOwnProperty("mode")) ? oConfig.mode : "string";
+
+	var aux = 0, h1 = 0, h2 = 0, k1 = 0, k2 = 0, b = 0, a = 0, sign = "";
 	if (n == 0) {
 		return 0;
 	}
@@ -780,6 +781,9 @@ function float2rat(n, mathlook, tolerance) {
 	}
 	if (k1 == 1) {
 		return sign + h1;
+	}
+	if (mode === "number") {
+		return ((sign === "-") ? (-h1 / k1) : (h1 / k1));
 	}
 	if (mathlook == "none") {
 		return '<span style="vertical-align:10px;">' + sign

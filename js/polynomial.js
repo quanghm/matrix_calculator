@@ -20,13 +20,13 @@ polynomial.prototype.toString = function(oConfig) {
 	oConfig = (typeof oConfig === "undefined") ? {} : oConfig;
 	var x = (oConfig.hasOwnProperty("x")) ? oConfig.x : "x";
 	var math = (oConfig.hasOwnProperty("mathlook")) ? oConfig.mathlook : "none";
-	var result = (this.coefs[0] === 0) ? "" : this.coefs[0];
+	var result = (this.coefs[0] === 0) ? "" : ((math==="none")?this.coefs[0]:(float2rat(this.coefs[0])));
 	var sPower;
 
 	for (var mono = 1; mono < this.coefs.length; mono++) {
 		sPower = (mono === 1) ? x
 				: (x + ((math === "none") ? ("<sup>" + mono + "</sup>")
-						: ("^" + mono)));
+						: ("^{" + mono+"}")));
 		if (this.coefs[mono] > 0) {
 			result += "+";
 		}
@@ -45,7 +45,7 @@ polynomial.prototype.toString = function(oConfig) {
 		}
 	}
 	if (result.charAt(0)==="+"){result=result.substring(1)}
-	if (math!=="none"){result="\\("+result+"\\)"}
+	if (math==="MathJax"){result="\\("+result+"\\)"}
 	return result;
 }
 
@@ -120,7 +120,8 @@ interpolate = function(aValues) {
 	var aResult = [];
 
 	for (var key = 0; key < aValues.length; key++) {
-		aResult.push(oMatrix.entries[key][aValues.length]);
+		//console.log("coef: "+float2rat(oMatrix.entries[key][aValues.length],{mode:"number"}));
+		aResult.push(float2rat(oMatrix.entries[key][aValues.length],{mode:"number"}));
 	}
 	return new polynomial(aResult);
 }
